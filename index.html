@@ -21,6 +21,16 @@
       );
     }
     setInterval(tick, 500);
+    
+    function Welcome(props) {
+      return <h1>hello, { props.name }</h1>;
+    }
+    const element = <Welcome name="alphaz" />;
+    ReactDOM.render(
+      element,
+      document.getElementById('example')
+    );
+    
     </script>
   </body>
 </html>
