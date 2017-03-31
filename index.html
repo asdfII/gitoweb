@@ -22,12 +22,32 @@
     }
     setInterval(tick, 500);
     
+    /* -------- ES6 functional --------
+    class Welcome extends React.Component {
+      render() {
+        return <h1>hello, { this.props.name }</h1>;
+      }
+    } -------------------------------- */
     function Welcome(props) {
-      return <h1>hello, { props.name }</h1>;
+      return (
+        <h1>hello, { props.name }</h1>
+      );
     }
-    const element = <Welcome name="alphaz" />;
+    
+    function App() {
+      return (
+        <div>
+          <Welcome name="alpha" />
+          <Welcome name="beta" />
+          <Welcome name="gama" />
+        </div>
+      );
+    }
+    
+    //const element = <Welcome name="alphaz" />;
     ReactDOM.render(
-      element,
+      //element,
+      <App />,
       document.getElementById('example')
     );
     
