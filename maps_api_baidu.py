@@ -1,38 +1,27 @@
-# -*- coding: cp936 -*-
+# -*- coding: utf-8 -*-
 
+import json
+from pprint import pprint
 import requests
-'''abfdb924b7acbab3c97066a27ab34c47'''
 '''iEOeleQlSwgGA4GelNyIPHu53KYOwElG'''
 
 
-def locatebyAddr(address, city=None):
-    items = {
-        'output': 'json',
-        'ak': 'iEOeleQlSwgGA4GelNyIPHu53KYOwElG',
-        'address': address
+def locatePlace(address, city=None):
+    params = {
+        u'output': u'json',
+        u'ak': u'iEOeleQlSwgGA4GelNyIPHu53KYOwElG',
+        #~ u'ret_coordtype	': u'gcj02ll / bd09mc',
+        #~ u'callback': u'showLocation / renderOption',
+        u'address': address,
+        u'city': city,
     }
-    if city:
-        items['city'] = city
-    r = requests.get('http://api.map.baidu.com/geocoder/v2/', params=items)
-    dictResult = r.json()
-    return dictResult['result']['location'] if not dictResult['status'] else None
+    headers = {
+        u'User-Agent': u'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'
+    }
+    url = u'http://api.map.baidu.com/geocoder/v2/'
+    r = requests.get(url, params=params, headers=headers)
+    r = r.json()
+    return r
 
 
-def locatebyLatLon(lat, lon, pois=0):
-    items = {'location': str(lat) + ',' + str(lon), 'ak': 'iEOeleQlSwgGA4GelNyIPHu53KYOwElG', 'output': 'json'}
-    if pois:
-        items['pois'] = 1
-    r = requests.get('http://api.map.baidu.com/geocoder/v2/', params=items)
-    dictResult = r.json()
-    return dictResult['result'] if not dictResult['status'] else None
-
-
-def main():
-    address = raw_input('Enter your address: ')
-    city = raw_input('Enter your city(optional): ')
-    result = locatebyAddr(address, city)
-    print(result)
-
-
-if __name__ == '__main__':
-    main()
+print locatePlace(u'望京')
