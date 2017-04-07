@@ -24,6 +24,7 @@ def index():
 def login():
     pass
 
+
 @app.route('/user/<username>')
 def profile(username):
     pass
