@@ -8,7 +8,9 @@ from flask import (
     session,
     url_for,
     redirect,
+    render_template,
     )
+
 from models import GitUser, GitGroup, GitRepo
 #~ init_db('gitolite', 'gitolite', 'gitolite')
 
@@ -25,16 +27,17 @@ def login():
     pass
 
 
+@app.route('/user/')
 @app.route('/user/<username>')
-def profile(username):
-    pass
+def profile(username=None):
+    return render_template('user.html', username=username)
 
 
 with app.test_request_context():
     print url_for('index')
     print url_for('login', user='admin')
     print url_for('profile', username='test')
+    print url_for('static', filename='./react/react.min.js')
 
-
-#~ if __name__ == '__main__':
-    #~ app.run()
+if __name__ == '__main__':
+    app.run()

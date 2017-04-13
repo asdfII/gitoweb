@@ -41,6 +41,7 @@ class GitAuth(Base):
 def init_db(user, passwd, dbname, host='localhost', port=3306):
     engine = create_engine(
         "mysql+pymysql://%s:%s@%s:%s/%s" % (user, passwd, host, port, dbname)
+        #~ "postgresql+psycopg2://user:password@host:port/dbname[?key=value&key=value...]"
     )
     Session = sessionmaker(bind=engine)
     session = Session()
