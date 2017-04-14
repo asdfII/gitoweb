@@ -37,7 +37,6 @@ class GitAuth(Base):
     name = Column(String(20))
 
 
-
 def init_db(user, passwd, dbname, host='localhost', port=3306):
     engine = create_engine(
         "mysql+pymysql://%s:%s@%s:%s/%s" % (user, passwd, host, port, dbname)

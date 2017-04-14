@@ -21,22 +21,15 @@ app = Flask(__name__)
 def index():
     pass
 
-
-@app.route('/login')
-def login():
-    pass
-
-
-@app.route('/user/')
-@app.route('/user/<username>')
-def profile(username=None):
-    return render_template('user.html', username=username)
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('hello.html', name=name)
 
 
 with app.test_request_context():
     print url_for('index')
-    print url_for('login', user='admin')
-    print url_for('profile', username='test')
+    print url_for('hello', name='test')
     print url_for('static', filename='./react/react.min.js')
 
 if __name__ == '__main__':
