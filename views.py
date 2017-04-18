@@ -10,6 +10,7 @@ from flask import (
     redirect,
     render_template,
     )
+from werkzeug.utils import secure_filename
 
 from models import GitUser, GitGroup, GitRepo
 #~ init_db('gitolite', 'gitolite', 'gitolite')
@@ -41,7 +42,7 @@ def hello(name=None):
 def upload_file():
     if request.method == 'POST':
         f = request.files['the_file']
-        f.save('/tmp/upload/uploaded_file.txt')
+        f.save('upload/uploaded_file.txt')
 
 
 with app.test_request_context():
