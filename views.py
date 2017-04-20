@@ -22,9 +22,11 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     username = request.cookies.get('username')
-    resp = make_response(render_template(...))
-    resp.set_cookie('username', 'the username')
-    return resp
+    #request.cookies['username']
+    # Storing cookies
+    #resp = make_response(render_template(...))
+    #resp.set_cookie('username', 'the username')
+    #return resp
 
 
 @app.route('/login', methods=['GET', 'POST'])
