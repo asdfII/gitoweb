@@ -12,11 +12,18 @@ from flask import (
     make_response,
     )
 from werkzeug.utils import secure_filename
-
-from models import GitUser, GitGroup, GitRepo
-#~ init_db('gitolite', 'gitolite', 'gitolite')
+from models import *
 
 app = Flask(__name__)
+Session = sessionmaker(bind=engine)
+session = Session()
+
+new_user = GitUser(name='alphaz')
+session.add(new_user)
+try:
+    session.commit()
+except:
+    session.rollback()
 
 
 @app.route('/')
