@@ -31,32 +31,19 @@ class GitRepo(Base):
     name = Column(String(20))
 
 
-class GitAuth(Base):
-    __tablename__ = 'git_auth'
-    id = Column(String(20), primary_key=True)
-    name = Column(String(20))
-
-
-def init_db(user, passwd, dbname, host='localhost', port=3306):
+def init_db(dbuser, dbpass, dbname, dbhost='localhost', dbport=3306, dbtype='mysql'):
     engine = create_engine(
-        "mysql+pymysql://%s:%s@%s:%s/%s" % (user, passwd, host, port, dbname)
-        #~ "postgresql+psycopg2://user:password@host:port/dbname[?key=value&key=value...]"
+        "mysql+pymysql://%s:%s@%s:%s/%s" % (dbuser, dbpass, dbhost, dbport, dbname)
     )
+    if dbtype == 'postgresql':
+        dbport = 5432
+        engine = create_engine(
+            "postgresql+psycopg2://%s:%s@%s:%s/%s" % (dbuser, dbpass, dbhost, dbport, dbname)
+        )
     Session = sessionmaker(bind=engine)
     session = Session()
     Base.metadata.create_all(engine)
     session.close()
 
 
-class DBOps(object):
-    def __init__(self, dbname, dbuser, dbpass, dbhost='localhost', dbport=3306):
-        self.dbname = dbname
-        self.dbuser = dbuser
-        self.dbpass = dbpass
-        self.dbhost = dbhost
-        self.dbport = dbport
-    
-    def connection(self):
-        engine = create_engine(
-            "mysql+pymysql://%s:%s@%s:%s/%s" % (dbuser, dbpass, dbhost, dbport, dbname)
-        )
+init_db('gitolite', 'gitolite', 'gitolite')
