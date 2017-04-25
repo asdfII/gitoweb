@@ -8,43 +8,40 @@ from sqlalchemy import (
     String,
     exc
 )
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-
-Base = declarative_base()
+from database import Base
 
 
 class GitUser(Base):
     __tablename__ = 'git_user'
     id = Column(Integer, primary_key=True)
     name = Column(String(20))
+    
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __unicode__(self):
+        return '<GitUser %s>' % (self.name)
 
 
 class GitGroup(Base):
     __tablename__ = 'git_group'
     id = Column(Integer, primary_key=True)
     name = Column(String(20))
+    
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __unicode__(self):
+        return '<GitGroup %s>' % (self.name)
 
 
 class GitRepo(Base):
     __tablename__ = 'git_repo'
     id = Column(Integer, primary_key=True)
     name = Column(String(20))
-
-
-def init_db(dbuser, dbpass, dbname, dbhost='localhost', dbport=3306, dbtype='mysql'):
-    global engine
-    engine = create_engine(
-        "mysql+pymysql://%s:%s@%s:%s/%s" % (dbuser, dbpass, dbhost, dbport, dbname)
-    )
-    if dbtype == 'postgresql':
-        engine = create_engine(
-            "postgresql+psycopg2://%s:%s@%s:%s/%s" % (dbuser, dbpass, dbhost, dbport, dbname)
-        )
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    Base.metadata.create_all(engine)
-    session.close()
-
-
-init_db('gitolite', 'gitolite', 'gitolite')
+    
+    def __init__(self, name=None):
+        self.name = name
+    
+    def __unicode__(self):
+        return '<GitRepo %s>' % (self.name)
