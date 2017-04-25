@@ -4,11 +4,8 @@ import sys
 
 from flask import (
     Flask,
-    request,
-    session,
-    url_for,
-    redirect,
-    render_template,
+    request, session,
+    url_for, redirect, render_template,
     make_response,
     )
 from werkzeug.utils import secure_filename

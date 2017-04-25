@@ -2,10 +2,7 @@
 
 from sqlalchemy import (
     create_engine,
-    Column,
-    CHAR,
-    Integer,
-    String,
+    Column, CHAR, Integer, String,
     exc
 )
 from database import Base

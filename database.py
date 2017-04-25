@@ -9,7 +9,7 @@ from dbparams import dbtype, dbname, dbuser, dbpass, dbhost, dbport
 if dbtype == 'sqlite':
     dbtype = 'sqlite://'
     engine = create_engine(
-        dbtype + '/gitolite.db',
+        dbtype + '/' + dbname + '.db',
         convert_unicode=True
     )
 if dbtype == 'mysql':
