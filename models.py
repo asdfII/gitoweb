@@ -3,6 +3,7 @@
 from sqlalchemy import (
     create_engine,
     Column,
+    CHAR,
     Integer,
     String,
     exc

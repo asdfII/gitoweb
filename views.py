@@ -14,16 +14,17 @@ from flask import (
 from werkzeug.utils import secure_filename
 from models import *
 
-app = Flask(__name__)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-new_user = GitUser(name='alphaz')
+new_user = GitUser(id=1, name='alphaz')
 session.add(new_user)
 try:
     session.commit()
 except:
     session.rollback()
+
+app = Flask(__name__)
 
 
 @app.route('/')
