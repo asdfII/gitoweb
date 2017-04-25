@@ -6,24 +6,18 @@ from sqlalchemy.ext.declarative import declarative_base
 from dbparams import dbtype, dbname, dbuser, dbpass, dbhost, dbport
 
 
+dbdrive = 'mysql+pymysql://'
+if dbtype == 'postgresql':
+    dbdrive = 'postgresql+psycopg2://'
+engine = create_engine(
+    dbdrive + dbuser + ':' + dbpass + '@' + dbhost
+    + ':' + dbport + '/' + dbname,
+    convert_unicode=True
+)
 if dbtype == 'sqlite':
-    dbtype = 'sqlite://'
+    dbdrive = 'sqlite://'
     engine = create_engine(
-        dbtype + '/' + dbname + '.db',
-        convert_unicode=True
-    )
-if dbtype == 'mysql':
-    dbtype = 'mysql+pymysql://'
-    engine = create_engine(
-        dbtype + dbuser + ':' + dbpass + '@' + dbhost
-        + ':' + dbport + '/' + dbname,
-        convert_unicode=True
-    )
-elif dbtype == 'postgresql':
-    dbtype = 'postgresql+psycopg2://'
-    engine = create_engine(
-        dbtype + dbuser + ':' + dbpass + '@' + dbhost
-        + ':' + dbport + '/' + dbname,
+        dbdrive + '/' + dbname + '.db',
         convert_unicode=True
     )
 
