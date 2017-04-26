@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import os
+import os, sys
 
 
+#sys.path.append(BASE_DIR)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # TYPE: mysql/postgresql/sqlite
