@@ -5,7 +5,7 @@ from sqlalchemy import (
     Column, CHAR, Integer, String,
     exc
 )
-from database import Base
+from db.database import Base
 
 
 class GitUser(Base):

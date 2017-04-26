@@ -2,11 +2,12 @@
 
 import ConfigParser
 
+from gitoweb.settings import BASE_DIR
 
-with open('gitolite.conf', 'rb') as file:
-    fp = open('new.conf', 'ab+')
+
+with open(BASE_DIR + '/conf/gitolite.conf', 'rb') as file:
+    fp = open(BASE_DIR + '/conf/new.conf', 'ab+')
     for line in file.readlines():
         #~ line = line.rstrip('\n')
         fp.write(line)
-    fp.write('\n')
     fp.close()

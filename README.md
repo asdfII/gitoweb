@@ -1,1 +1,1 @@
-# Just a workspace for my test and debug.
+# A Platform based on Gitolite

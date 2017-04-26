@@ -9,7 +9,7 @@ from flask import (
     make_response,
     )
 from werkzeug.utils import secure_filename
-from models import *
+from .models import *
 
 Session = sessionmaker(bind=engine)
 session = Session()

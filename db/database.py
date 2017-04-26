@@ -3,21 +3,22 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from dbparams import dbtype, dbname, dbuser, dbpass, dbhost, dbport
+from gitoweb.settings import DATABASES
 
 
-dbdrive = 'mysql+pymysql://'
-if dbtype == 'postgresql':
-    dbdrive = 'postgresql+psycopg2://'
+DRIVE = 'mysql+pymysql://'
+if DATABASES['TYPE'] == 'postgresql':
+    DRIVE = 'postgresql+psycopg2://'
 engine = create_engine(
-    dbdrive + dbuser + ':' + dbpass + '@' + dbhost
-    + ':' + dbport + '/' + dbname,
+    DRIVE + DATABASES['USER'] + ':' + DATABASES['PASS']
+    + '@' + DATABASES['HOST'] + ':' + DATABASES['PORT']
+    + '/' + DATABASES['NAME'],
     convert_unicode=True
 )
-if dbtype == 'sqlite':
-    dbdrive = 'sqlite://'
+if DATABASES['TYPE'] == 'sqlite':
+    DRIVE = 'sqlite://'
     engine = create_engine(
-        dbdrive + '/' + dbname + '.db',
+        DRIVE + '/' + DATABASES['NAME'] + '.db',
         convert_unicode=True
     )
 
@@ -33,5 +34,5 @@ Base.query = db_session.query_property()
 
 
 def init_db():
-    import models
+    from index import models
     Base.metadata.create_all(bind=engine)
