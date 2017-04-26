@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from gitoweb.settings import DATABASES
+from gitoweb.settings import DATABASES, BASE_DIR
 
 
 DRIVE = 'mysql+pymysql://'
@@ -18,7 +20,8 @@ engine = create_engine(
 if DATABASES['TYPE'] == 'sqlite':
     DRIVE = 'sqlite://'
     engine = create_engine(
-        DRIVE + '/' + DATABASES['NAME'] + '.db',
+        DRIVE + '/' + os.path.dirname(os.path.abspath(__file__))
+        + '/' + DATABASES['NAME'] + '.db',
         convert_unicode=True
     )
 
