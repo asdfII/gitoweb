@@ -13,7 +13,8 @@ class GitUser(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(20))
     
-    def __init__(self, name=None):
+    def __init__(self, id=None, name=None):
+        self.id = id
         self.name = name
     
     def __unicode__(self):
@@ -25,7 +26,8 @@ class GitGroup(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(20))
     
-    def __init__(self, name=None):
+    def __init__(self, id=None, name=None):
+        self.id = id
         self.name = name
     
     def __unicode__(self):
@@ -37,7 +39,8 @@ class GitRepo(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(20))
     
-    def __init__(self, name=None):
+    def __init__(self, id=None, name=None):
+        self.id = id
         self.name = name
     
     def __unicode__(self):
