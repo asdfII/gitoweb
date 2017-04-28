@@ -7,7 +7,9 @@ from flask import (
     make_response,
     )
 from werkzeug.utils import secure_filename
-from .models import *
+
+from manage import app
+from .models import GitUser, GitGroup, GitRepo
 from db.database import sessionmaker, engine
 
 
@@ -20,8 +22,6 @@ try:
     session.commit()
 except:
     session.rollback()
-
-app = Flask(__name__)
 
 
 @app.route('/')

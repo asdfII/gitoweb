@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask
-from index.views import app
+from manage import app
 
 
 @app.route('/repo')
