@@ -13,15 +13,15 @@ from .models import GitUser, GitGroup, GitRepo
 from db.database import sessionmaker, engine
 
 
-Session = sessionmaker(bind=engine)
-session = Session()
+#~ Session = sessionmaker(bind=engine)
+#~ session = Session()
 
-new_user = GitUser(name='alphaz')
-session.add(new_user)
-try:
-    session.commit()
-except:
-    session.rollback()
+#~ new_user = GitUser(name='alphaz')
+#~ session.add(new_user)
+#~ try:
+    #~ session.commit()
+#~ except:
+    #~ session.rollback()
 
 
 @app.route('/')
