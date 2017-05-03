@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import socket
+
 from flask import Flask
 
 
@@ -10,4 +12,7 @@ if __name__ == '__main__':
     from index.views import *
     from group.views import *
     from repo.views import *
-    app.run()
+    try:
+        app.run()
+    except socket.error:
+        pass

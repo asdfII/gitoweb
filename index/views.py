@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from flask import (
-    Flask,
-    request, session,
-    url_for, redirect, render_template,
-    make_response,
-    )
+    request, session, g,
+    redirect, url_for, abort,
+    render_template, flash, make_response,
+)
 from werkzeug.utils import secure_filename
 
 from manage import app
 from .models import GitUser, GitGroup, GitRepo
-from db.database import sessionmaker, engine
+from db.database import sessionmaker, engine, db_session
 
 
 #~ Session = sessionmaker(bind=engine)
@@ -18,12 +17,19 @@ from db.database import sessionmaker, engine
 
 #~ new_user = GitUser(name='alphaz')
 #~ session.add(new_user)
-#~ try:
-    #~ session.commit()
-#~ except:
-    #~ session.rollback()
 
 
 @app.route('/')
 def login():
-    return "Please log in."
+    return render_template('index.html')
+
+
+@app.route('/show', methods=['Get'])
+def show():
+    new_user = GitUser(name='alphaz')
+    db_session.add(new_user)
+    try:
+        db_session.commit()
+    except:
+        db_session.rollback()
+    return render_template('show.html')
