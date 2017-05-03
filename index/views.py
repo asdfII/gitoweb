@@ -19,17 +19,12 @@ from db.database import sessionmaker, engine, db_session
 #~ session.add(new_user)
 
 
-@app.route('/')
+@app.route('/', methods=['Get'])
 def login():
-    return render_template('index.html')
-
-
-@app.route('/show', methods=['Get'])
-def show():
     new_user = GitUser(name='alphaz')
     db_session.add(new_user)
     try:
         db_session.commit()
     except:
         db_session.rollback()
-    return render_template('show.html')
+    return render_template('index.html')
