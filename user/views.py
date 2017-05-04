@@ -4,6 +4,6 @@ from flask import render_template
 from manage import app
 
 
-@app.route('/group')
-def group():
-    return render_template('group.html')
+@app.route('/user')
+def user():
+    return render_template('user.html')

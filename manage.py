@@ -10,9 +10,10 @@ app = Flask(__name__)
 
 if __name__ == '__main__':
     from index.views import *
-    from group.views import *
     from repo.views import *
+    from group.views import *
+    from user.views import *
     try:
         app.run()
     except socket.error:
-        pass
+        print 'Massive requests and socket error.'

@@ -9,19 +9,20 @@
 
 {% block nav %}
   <li>
-    <a href="{# url 'index' #}"><span class="glyphicon glyphicon-dashboard"></span> Overview</a>
+    <a href="{{ url_for('index') }}"><span class="glyphicon glyphicon-dashboard"></span> Overview</a>
   </li>
   <li>
-    <a href="{# url 'user' #}"><span class="glyphicon glyphicon-edit"></span> Users</a>
+    <a href="{{ url_for('user') }}"><span class="glyphicon glyphicon-edit"></span> Users</a>
   </li>
   <li>
-    <a href="{# url 'group' #}"><span class="glyphicon glyphicon-list-alt"></span> Groups</a>
+    <a href="{{ url_for('group') }}"><span class="glyphicon glyphicon-list-alt"></span> Groups</a>
   </li>
   <li class="active">
-    <a href="{# url 'repo' #}"><span class="glyphicon glyphicon-tasks"></span> Repos
+    <a href="{{ url_for('repo') }}"><span class="glyphicon glyphicon-tasks"></span> Repos
     <span class="sr-only">(current)</span></a>
   </li>
 {% endblock %}
 
 {% block content %}
+RRRRRRRRRRRRRRRRRRRepoooo
 {% endblock %}

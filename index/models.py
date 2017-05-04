@@ -27,8 +27,9 @@ class GitGroup(Base):
     name = Column(String(20))
     git_repo_id = Column(Integer, ForeignKey('git_repo.id'))
     
-    git_repo = relationship('GitRepo', backref=
-        backref('git_group', lazy='dynamic')
+    git_repo = relationship('GitRepo',
+        backref=backref('git_group', lazy='dynamic'),
+        cascade='all, delete, delete-orphan',
     )
     
     def __init__(self, id=None, name=None):
@@ -45,8 +46,9 @@ class GitUser(Base):
     name = Column(String(20))
     git_group_id = Column(Integer, ForeignKey('git_group.id'))
     
-    git_group = relationship('GitGroup', backref=
-        backref('git_user', lazy='dynamic')
+    git_group = relationship('GitGroup',
+        backref=backref('git_user', lazy='dynamic'),
+        cascade='all, delete, delete-orphan',
     )
     
     def __init__(self, id=None, name=None):
