@@ -6,4 +6,8 @@ from manage import app
 
 @app.route('/user')
 def user():
-    return render_template('user.html')
+    userdata = {
+        'name': 'gitoweb',
+        'project': 'gitowebproj',
+    }
+    return render_template('user.html', userdata=userdata)
