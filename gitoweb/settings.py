@@ -26,5 +26,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/var/www/html/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, 'static'),
 ]
+
+KEY_DIRS = os.path.join(BASE_DIR, 'keydir')
