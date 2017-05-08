@@ -38,27 +38,13 @@ def uploaded_file(filename):
 def upload_file():
     if request.method == 'POST':
         file = request.files['file']
-        
-        print KEY_DIRS
-        
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            
-            upload_path = os.path.join(KEY_DIRS, filename)
-            
-            file.save(upload_path)
-            return redirect(url_for(
-                'uploaded_file',
-                filename=filename)
+            file.save(os.path.join(KEY_DIRS, filename))
+            return redirect(
+                url_for(
+                    'uploaded_file',
+                    filename=filename
+                )
             )
-    return '''
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form action="" method=post enctype=multipart/form-data>
-      <p>
-        <input type=file name=file>
-        <input type=submit value=Upload>
-      </p>
-    </form>
-    '''
+    return render_template('user.html')
