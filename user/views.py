@@ -47,4 +47,4 @@ def upload_file():
                     filename=filename
                 )
             )
-    return render_template('user.html')
+    return redirect(url_for('user'))

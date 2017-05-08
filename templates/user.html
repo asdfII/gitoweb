@@ -24,15 +24,16 @@
 {% endblock %}
 
 {% block content %}
-UUUUUUUUUUUUUUser
+<h1 class="page-header">Public keys</h1>
+
 <br>
 {{ userdata }}
 <br>
 {% for i in userdata %}
   {{ i }}: {{ userdata[name] }}
 {% endfor %}
-
-<h1>Upload your public key</h1>
+<br
+<h2>Upload your public key</h2>
 <form method="POST" enctype="multipart/form-data">
   <input type="file" name="file">
   <input type="submit" value="Upload">
