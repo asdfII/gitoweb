@@ -20,11 +20,11 @@ def index():
     except:
         db_session.rollback()
     
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(host, port, user, passwd, timeout=3)
-    stdin, stdout, stderr = ssh.exec_command('file' + ' ' + filename)
-    ssh.close()
+    #~ ssh = paramiko.SSHClient()
+    #~ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    #~ ssh.connect(host, port, user, passwd, timeout=3)
+    #~ stdin, stdout, stderr = ssh.exec_command('file' + ' ' + filename)
+    #~ ssh.close()
     
     return render_template('index.html')
 

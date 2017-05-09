@@ -9,6 +9,7 @@ from flask import (
 from werkzeug.utils import secure_filename
 
 from gitoweb.settings import KEY_DIRS
+from utils.traversal import item_traversal
 from manage import app
 
 
@@ -17,10 +18,7 @@ ALLOWED_EXTENSIONS = set(['pub'])
 
 @app.route('/user')
 def user():
-    userdata = {
-        'name': 'gitoweb',
-        'project': 'gitowebproj',
-    }
+    userdata = item_traversal('static')
     return render_template('user.html', userdata=userdata)
 
 
