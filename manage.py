@@ -14,6 +14,6 @@ if __name__ == '__main__':
     from group.views import *
     from user.views import *
     try:
-        app.run()
+        app.run(debug=True)
     except socket.error:
         print 'Massive requests and socket error.'

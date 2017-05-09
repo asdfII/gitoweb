@@ -18,7 +18,7 @@ ALLOWED_EXTENSIONS = set(['pub'])
 
 @app.route('/user')
 def user():
-    userdata = item_traversal('static')
+    userdata = item_traversal('keydir')
     return render_template('user.html', userdata=userdata)
 
 
@@ -39,10 +39,20 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(KEY_DIRS, filename))
-            return redirect(
+            #~ return redirect(
+            print (
                 url_for(
                     'uploaded_file',
                     filename=filename
                 )
             )
-    return redirect(url_for('user'))
+    #~ return redirect(url_for('user'))
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+    '''

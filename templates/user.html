@@ -24,19 +24,50 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="page-header">Public keys</h1>
 
-<br>
-{{ userdata }}
-<br>
-{% for i in userdata %}
-  {{ i }}: {{ userdata[name] }}
-{% endfor %}
-<br
-<h2>Upload your public key</h2>
-<form method="POST" enctype="multipart/form-data">
-  <input type="file" name="file">
-  <input type="submit" value="Upload">
-</form>
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#userList" data-toggle="tab"><strong>Users</strong></a></li>
+  <li><a href="#userUpload" data-toggle="tab"><strong>Public Keys</strong></a></li>
+</ul>
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade in active" id="userList">
+    <table class="table table-striped">
+      <thead>
+        <tr class="table table-striped">
+          <th>ID</th>
+          <th>Key</th>
+        </tr>
+      </thead>
+      <tbody class="table table-striped">
+      {% for i in userdata.keydir %}
+        {% set counter = loop.index %}
+        <tr>
+          <td>{{ counter }}</td>
+          <td>{{ i }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="tab-pane fade" id="userUpload">
+    <table class="table table-striped">
+      <thead>
+        <tr class="table table-striped">
+          <th>Upload your public key</th>
+        </tr>
+      </thead>
+      <tbody class="table table-striped">
+        <tr>
+          <td>
+            <form method="POST" enctype="multipart/form-data">
+              <input type="file" name="file" multiple>
+              <input type="submit" value="Upload">
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 {% endblock %}

@@ -5,10 +5,9 @@ import os
 from gitoweb.settings import BASE_DIR
 
 
-item_dict = {}
-l1_obj = []
-
 def item_traversal(dir):
+    item_dict = {}
+    l1_obj = []
     dir = dir.strip('/')
     dir_full = BASE_DIR + '/' + dir + '/'
     for l1_item in os.listdir(dir_full):
