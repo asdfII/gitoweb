@@ -28,23 +28,55 @@ def uploaded_file(filename):
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():
+    status_dict = {
+        0: 'Upload successfully.',
+        1: 'Not a pub key file.',
+        2: 'The pub key already exists.',
+        3: 'Error while writing into db.',
+    }
+    upload_status = {}
+    
     f = open('log.log', 'ab+')
     if request.method == 'POST':
         file = request.files['file']
-        if file and allowed_file(file.filename):
+        if file:
+            if not allowed_file(file.filename):
+                upload_status['status'] = 1
+                return render_template(
+                    'upload.html',
+                    upload_status=upload_status,
+                )
             filename = secure_filename(file.filename)
-            file.save(os.path.join(KEY_DIRS, filename))
-            print >>f, filename + " has been saved."
+            filepath = os.path.join(KEY_DIRS, filename)
+            if os.path.isfile(filepath):
+                upload_status['status'] = 2
+                return render_template(
+                    'upload.html',
+                    upload_status=upload_status,
+                )
+            file.save(filepath)
+            print >>f, filename + " has been saved locally."
             try:
                 new_user = GitUser(name=filename)
                 db_session.add(new_user)
                 db_session.commit()
-                print >>f, "Write DB successfully"
+                upload_status['status'] = 0
+                return render_template(
+                    'upload.html',
+                    upload_status=upload_status,
+                )
             except:
                 db_session.rollback()
-            return render_template('upload.html')
-        if file and not allowed_file(file.filename):
-            return render_template('error.html')
+                os.remove(filepath)
+                upload_status['status'] = 3
+                return render_template(
+                    'upload.html',
+                    upload_status=upload_status,
+                )
     f.close()
     keylist = item_traversal('keydir')
-    return render_template('user.html', keylist=keylist)
+    return render_template(
+        'user.html',
+        keylist=keylist,
+        data=status_dict,
+    )

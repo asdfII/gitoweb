@@ -10,9 +10,23 @@
 {% block content %}
 
 <div>
+{% if upload_status.status|int == 0 %}
   <div class="alert alert-success">
     <strong>Upload successfully.</strong>
   </div>
+{% elif upload_status.status|int == 1 %}
+  <div class="alert alert-danger">
+    <strong>Not a pub key file.</strong>
+  </div>
+{% elif upload_status.status|int == 2 %}
+  <div class="alert alert-danger">
+    <strong>The pub key already exists.</strong>
+  </div>
+{% elif upload_status.status|int == 3 %}
+  <div class="alert alert-danger">
+    <strong>Error while writing into db.</strong>
+  </div>
+{% endif %}
   <button type="button" class="btn btn-default">
     <a href="{{ url_for('user') }}" style="color:#000000;text-decoration:none;">Back</a>
   </button>
