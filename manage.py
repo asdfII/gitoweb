@@ -3,6 +3,7 @@
 import socket
 
 from flask import Flask
+from gitoweb.settings import *
 
 
 app = Flask(__name__)

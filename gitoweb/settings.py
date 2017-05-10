@@ -27,4 +27,4 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-KEY_DIRS = os.path.join(BASE_DIR, 'keydir')
+KEY_DIR = os.path.join(BASE_DIR, 'keydir')

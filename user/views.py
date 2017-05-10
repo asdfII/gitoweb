@@ -7,8 +7,7 @@ from flask import (
     render_template, redirect, url_for
 )
 from werkzeug.utils import secure_filename
-from manage import app
-from gitoweb.settings import KEY_DIRS
+from manage import app, KEY_DIR
 from utils.traversal import item_traversal
 from index.models import GitUser, GitGroup, GitRepo
 from db.database import db_session
@@ -23,7 +22,7 @@ def allowed_file(filename):
 
 @app.route('/user/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(KEY_DIRS, filename)
+    return send_from_directory(KEY_DIR, filename)
 
 
 @app.route('/user', methods=['GET', 'POST'])
@@ -43,7 +42,7 @@ def user():
         file = request.files['file']
         if file:
             filename = secure_filename(file.filename)
-            filepath = os.path.join(KEY_DIRS, filename)
+            filepath = os.path.join(KEY_DIR, filename)
             if not allowed_file(filename):
                 upload_status['status'] = 1
                 print >>f, filename + ' is not a pub key.'

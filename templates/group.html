@@ -20,5 +20,25 @@
 {% block content %}
 
 <h1 class="page-header">Groups</h1>
-GGGGrrrrrrrrroup
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane fade in active" id="groupList">
+    <table class="table table-striped">
+      <thead>
+        <tr class="table table-striped">
+          <th>ID</th>
+          <th>Group</th>
+        </tr>
+      </thead>
+      <tbody class="table table-striped">
+      {% for i in grouplist['conf/groups'] %}
+        {% set counter = loop.index %}
+        <tr>
+          <td>{{ counter }}</td>
+          <td>{{ i }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}
