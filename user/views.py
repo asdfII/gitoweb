@@ -35,7 +35,8 @@ def user():
         3: 'Error while writing into db.',
         4: 'Please choose a pub key file.'
     }
-    upload_status = {}
+    upload_status = {'status': '-1'}
+    keylist = item_traversal('keydir')
     
     f = open('log.log', 'ab+')
     if request.method == 'POST':
@@ -75,11 +76,13 @@ def user():
                     'upload.html',
                     upload_status=upload_status,
                 )
-        if not file:
-            print status_dict['4']
-    
+        else:
+            upload_status['status'] = 4
+            return render_template(
+                'upload.html',
+                upload_status=upload_status,
+            )
     f.close()
-    keylist = item_traversal('keydir')
     return render_template(
         'user.html',
         keylist=keylist,

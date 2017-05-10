@@ -1,12 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Gitoweb{% endblock %}
 
-{% if name %}
-  <h1>Hello {{ name }}!</h1>
-{% else %}
-  <h1>Hello, Anonymous!</h1>
-{% endif %}
-
 {% block nav %}
   <li>
     <a href="{{ url_for('index') }}"><span class="glyphicon glyphicon-dashboard"></span> Overview</a>
@@ -75,6 +69,24 @@
         </tr>
       </tbody>
     </table>
+    <!--{#
+    <div id="myAlert" class="alert alert-success">
+      <a href="#" class="close" data-dismiss="alert">&times;</a>
+      <strong>success</strong>OK
+    </div>
+    {% if data.status|int == 4 %}
+    <div id="myAlert" class="alert alert-warning">
+      <a href="" class="close" data-dismiss="alert">&times;</a>
+      <strong>warning: </strong>Please choose a pub key file.
+    </div>
+    {% endif %}
+    <script type="text/javascript">
+    $(function(){
+        $(".close").click(function(){
+            $("#myAlert").alert();
+        });
+    });
+    </script>#}-->
   </div>
 </div>
 {% endblock %}
