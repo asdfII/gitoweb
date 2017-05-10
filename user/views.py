@@ -33,6 +33,7 @@ def user():
         1: 'Not a pub key file.',
         2: 'The pub key already exists.',
         3: 'Error while writing into db.',
+        4: 'Please choose a pub key file.'
     }
     upload_status = {}
     
@@ -40,14 +41,15 @@ def user():
     if request.method == 'POST':
         file = request.files['file']
         if file:
-            if not allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(KEY_DIRS, filename)
+            if not allowed_file(filename):
                 upload_status['status'] = 1
+                print >>f, filename + ' is not a pub key.'
                 return render_template(
                     'upload.html',
                     upload_status=upload_status,
                 )
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(KEY_DIRS, filename)
             if os.path.isfile(filepath):
                 upload_status['status'] = 2
                 return render_template(
@@ -55,7 +57,7 @@ def user():
                     upload_status=upload_status,
                 )
             file.save(filepath)
-            print >>f, filename + " has been saved locally."
+            print >>f, filename + ' has been saved locally.'
             try:
                 new_user = GitUser(name=filename)
                 db_session.add(new_user)
@@ -73,6 +75,9 @@ def user():
                     'upload.html',
                     upload_status=upload_status,
                 )
+        if not file:
+            print status_dict['4']
+    
     f.close()
     keylist = item_traversal('keydir')
     return render_template(
