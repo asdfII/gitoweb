@@ -7,8 +7,8 @@ from flask import (
 )
 from werkzeug.utils import secure_filename
 from manage import app
-from .models import GitUser, GitGroup, GitRepo
-from db.database import sessionmaker, engine, db_session
+from index.models import GitUser, GitGroup, GitRepo
+from db.database import db_session
 
 
 @app.route('/', methods=['Get'])

@@ -7,7 +7,6 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from gitoweb.settings import DATABASES, BASE_DIR
 
-
 DRIVE = 'mysql+pymysql://'
 if DATABASES['TYPE'] == 'postgresql':
     DRIVE = 'postgresql+psycopg2://'
