@@ -29,7 +29,7 @@ class GitGroup(Base):
     
     git_repo = relationship('GitRepo',
         backref=backref('git_group', lazy='dynamic'),
-        cascade='all, delete, delete-orphan',
+        cascade='all, delete',
     )
     
     def __init__(self, id=None, name=None):
@@ -48,7 +48,7 @@ class GitUser(Base):
     
     git_group = relationship('GitGroup',
         backref=backref('git_user', lazy='dynamic'),
-        cascade='all, delete, delete-orphan',
+        cascade='all, delete',
     )
     
     def __init__(self, id=None, name=None):

@@ -16,12 +16,6 @@ from db.database import db_session
 ALLOWED_EXTENSIONS = set(['pub'])
 
 
-@app.route('/user')
-def user():
-    keylist = item_traversal('keydir')
-    return render_template('user.html', keylist=keylist)
-
-
 def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -33,25 +27,24 @@ def uploaded_file(filename):
 
 
 @app.route('/user', methods=['GET', 'POST'])
-def upload_file():
+def user():
+    f = open('log.log', 'ab+')
     if request.method == 'POST':
         file = request.files['file']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(KEY_DIRS, filename))
+            print >>f, filename + " has been saved."
             try:
                 new_user = GitUser(name=filename)
                 db_session.add(new_user)
                 db_session.commit()
-                print "Write DB successfully"
+                print >>f, "Write DB successfully"
             except:
                 db_session.rollback()
             return render_template('upload.html')
-            #~ return redirect(
-                #~ url_for(
-                    #~ 'uploaded_file',
-                    #~ filename=filename
-                #~ )
-            #~ )
-    return redirect(url_for('user'))
-    #~ return render_template('upload_pass.html')
+        if file and not allowed_file(file.filename):
+            return render_template('error.html')
+    f.close()
+    keylist = item_traversal('keydir')
+    return render_template('user.html', keylist=keylist)
