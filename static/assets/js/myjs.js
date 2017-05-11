@@ -22,8 +22,8 @@ function checkAll(ele) {
     }
 }
 
-function selectAll(source) {
-    checkboxes = document.getElementsByName('server_name');
+function selectAllGroup(source) {
+    checkboxes = document.getElementsByName('group_name');
     for(var i = 0, n = checkboxes.length; i < n; i++) {
         checkboxes[i].checked = source.checked;
     }

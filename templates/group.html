@@ -32,8 +32,9 @@
           <th class="text-center">ID</th>
           <th class="text-center">Group</th>
           <th class="text-center">Action</th>
-          <th class="text-center">Select
-            <input type="checkbox" onclick="selectAll(this)">
+          <th class="text-center">
+            Select
+            <input type="checkbox" onclick="selectAllGroup(this)">
           </th>
         </tr>
       </thead>
@@ -49,7 +50,7 @@
             </div>
           </td>
           <td>
-            <input type="checkbox">
+            <input type="checkbox" name="group_name" value="bar1">
           </td>
         </tr>
       {% endfor %}
@@ -70,7 +71,6 @@
     </table>
   </div>
 </div>
-
 <script>
   $(function() {
 	  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
@@ -81,26 +81,4 @@
 	  });
   });
 </script>
-
-
-  <input type="checkbox" onclick="selectAll(this)" /> Select All<br><br>
-  <input type="checkbox" name="server_name" value="bar1"> Host01<br>
-  <input type="checkbox" name="server_name" value="bar2"> Host02<br>
-  <input type="checkbox" name="server_name" value="bar3"> Host03<br>
-  <input type="checkbox" name="server_name" value="bar4"> Host04<br>
-
-  <div class="col-sm-1">
-    <a class="btn btn-sm btn-success" id="check_succeed" onclick="getCheckValue('passed')"> Passed </a>
-  </div>
-  <div class="col-sm-1">
-    <a class="btn btn-sm btn-info" id="check_accept" onclick="getCheckValue('accept')"> Accept </a>
-  </div>
-  <div class="col-sm-1">
-    <a class="btn btn-sm btn-warning" id="check_reject" onclick="getCheckValue('reject')"> Reject </a>
-  </div>
-  <div class="col-sm-1">
-    <a class="btn btn-sm btn-danger" id="check_delete" onclick="getCheckValue('failed')"> Failed </a>
-  </div>
-
-
 {% endblock %}
