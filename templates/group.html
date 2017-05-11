@@ -19,7 +19,11 @@
 
 {% block content %}
 
-<h1 class="page-header">Groups</h1>
+<!-- <h1 class="page-header">Groups</h1> -->
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#groupList" data-toggle="tab"><strong>Groups</strong></a></li>
+  <li><a href="#groupManager" data-toggle="tab"><strong>GroupManager</strong></a></li>
+</ul>
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade in active" id="groupList">
     <table class="table table-striped">
@@ -37,6 +41,21 @@
           <td>{{ i }}</td>
         </tr>
       {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="tab-pane fade" id="groupManager">
+    <table class="table">
+      <thead>
+        <tr class="table">
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="table">
+        <tr>
+          <td>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
