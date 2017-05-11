@@ -23,9 +23,11 @@ def group():
                 group_name = (((_.strip('\n')).split('='))[0]).strip().lstrip('@')
                 group_member = ((_.strip('\n')).split('='))[1]
                 grouplist[group_name] = group_member
-    #~ if request.method == 'POST':
-        #~ group_add('new_group')
-    group_add('new_group')
+    if request.method == 'POST':
+        new_group_name = request.form.get('addGroupName', '')
+        if new_group_name:
+            group_add(new_group_name)
+            return redirect(url_for('group'))
     return render_template(
         'group.html',
         #~ grouplist=groupfile,

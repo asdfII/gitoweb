@@ -39,7 +39,7 @@ def user():
     
     f = open('log.log', 'ab+')
     if request.method == 'POST':
-        file = request.files['file']
+        file = request.files['keyFile']
         if file:
             filename = secure_filename(file.filename)
             filepath = os.path.join(KEY_DIR, filename)

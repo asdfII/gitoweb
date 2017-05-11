@@ -47,22 +47,22 @@
   <div class="tab-pane fade" id="userUpload">
     <table class="table table-condensed">
       <thead>
-<!--         <tr class="table table-condensed">
+        <tr class="table table-condensed">
           <th>Upload your public key</th>
-        </tr> -->
+        </tr>
       </thead>
       <tbody class="table table-condensed">
         <tr>
           <td>
-            <form class="form-inline" role="form" method="POST", enctype="multipart/form-data">
+            <form class="form-inline" role="form" method="POST" enctype="multipart/form-data">
               <button type="submit" class="btn btn-default">Upload</button>
               <div class="form-group">
-                <label class="sr-only" for="name">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Please enter">
+                <label class="sr-only" for="keyName">Key Name</label>
+                <input type="text" class="form-control" id="keyName" placeholder="Please enter">
               </div>
               <div class="form-group">
-                <label class="sr-only" for="inputfile">Filepath</label>
-                <input type="file" id="inputfile" name="file" multiple>
+                <label class="sr-only" for="inputfile">Kye Path</label>
+                <input type="file" id="inputfile" name="keyFile" multiple>
               </div>
             </form>
           </td>
