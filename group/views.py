@@ -16,7 +16,8 @@ def group():
             content = f.readlines()
             for _ in content:
                 print _.strip('\n')
-    group_add('new_group')
+    if request.method == 'POST':
+        group_add('new_group')
     return render_template(
         'group.html',
         grouplist=grouplist,

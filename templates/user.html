@@ -26,14 +26,14 @@
 </ul>
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade in active" id="userList">
-    <table class="table table-striped">
+    <table class="table table-condensed table-striped">
       <thead>
-        <tr class="table table-striped">
+        <tr class="table table-condensed table-striped">
           <th>ID</th>
           <th>Key</th>
         </tr>
       </thead>
-      <tbody class="table table-striped">
+      <tbody class="table table-condensed table-striped">
       {% for i in keylist.keydir %}
         {% set counter = loop.index %}
         <tr>
@@ -45,13 +45,13 @@
     </table>
   </div>
   <div class="tab-pane fade" id="userUpload">
-    <table class="table">
+    <table class="table table-condensed">
       <thead>
-        <tr class="table">
+        <tr class="table table-condensed">
           <th>Upload your public key</th>
         </tr>
       </thead>
-      <tbody class="table">
+      <tbody class="table table-condensed">
         <tr>
           <td>
             <form class="form-inline" role="form" method="POST", enctype="multipart/form-data">

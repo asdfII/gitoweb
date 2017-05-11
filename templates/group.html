@@ -22,39 +22,43 @@
 <!-- <h1 class="page-header">Groups</h1> -->
 <ul id="myTab" class="nav nav-tabs">
   <li class="active"><a href="#groupList" data-toggle="tab"><strong>Groups</strong></a></li>
-  <li><a href="#groupManager" data-toggle="tab"><strong>GroupManager</strong></a></li>
+  <li><a href="#groupManager" data-toggle="tab"><strong>Group Manager</strong></a></li>
 </ul>
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade in active" id="groupList">
-    <table class="table table-striped">
+    <table class="table table-condensed table-striped">
       <thead>
-        <tr class="table table-striped">
+        <tr class="table table-condensed table-striped">
           <th>ID</th>
           <th>Group</th>
+          <th>Action</th>
         </tr>
       </thead>
-      <tbody class="table table-striped">
+      <tbody class="table table-condensed table-striped">
       {% for i in grouplist['conf/groups'] %}
         {% set counter = loop.index %}
         <tr>
           <td>{{ counter }}</td>
           <td>{{ i }}</td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-danger" id="deleteGroup">Delete</button>
+            </div>
+          </td>
         </tr>
       {% endfor %}
       </tbody>
     </table>
   </div>
   <div class="tab-pane fade" id="groupManager">
-    <table class="table">
+    <table class="table table-condensed">
       <thead>
-        <tr class="table">
-          <th></th>
+        <tr class="table table-condensed">
+          <th>Add a new group</th>
         </tr>
       </thead>
-      <tbody class="table">
+      <tbody class="table table-condensed">
         <tr>
-          <td>
-          </td>
         </tr>
       </tbody>
     </table>
