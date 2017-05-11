@@ -2,7 +2,7 @@
 
 import os
 
-from flask import render_template
+from flask import render_template, redirect, url_for
 from manage import app, BASE_DIR
 from utils.traversal import item_traversal
 
@@ -27,3 +27,6 @@ def group():
 def group_add(group_name):
     f = open(BASE_DIR + '/conf/groups/' + group_name + '.conf', 'wb+')
     f.close()
+    return redirect(
+        url_for('group')
+    )
