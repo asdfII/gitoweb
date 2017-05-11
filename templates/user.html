@@ -55,14 +55,16 @@
         <tr>
           <td>
             <form class="form-inline" role="form" method="POST" enctype="multipart/form-data">
-              <button type="submit" class="btn btn-default">Upload</button>
               <div class="form-group">
-                <label class="sr-only" for="keyName">Key Name</label>
-                <input type="text" class="form-control" id="keyName" placeholder="Please enter">
+                <label class="sr-only" for="inputfile">Key Path</label>
+                <input type="file" id="inputfile" name="keyFile" style="display:none" multiple>
               </div>
-              <div class="form-group">
-                <label class="sr-only" for="inputfile">Kye Path</label>
-                <input type="file" id="inputfile" name="keyFile" multiple>
+              <div class="input-group">
+                <input type="text" id="inputpath" class="input-large form-control" style="height:35px;">
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="$('input[id=inputfile]').click();">Browse</button>
+                <button type="submit" class="btn btn-default">Upload</button>
+                </span>
               </div>
             </form>
           </td>
@@ -89,4 +91,10 @@
     </script>#}-->
   </div>
 </div>
+<script>
+  
+$('input[id=inputfile').change(function() {
+    $('#inputpath').val($(this).val());
+});
+</script>
 {% endblock %}

@@ -7,7 +7,9 @@ from flask import (
     render_template, redirect, url_for
 )
 from manage import app, BASE_DIR
-from utils.traversal import item_traversal
+from utils.widgets import item_traversal, allowed_file
+
+allowed_ext = ['conf']
 
 
 @app.route('/group', methods=['GET', 'POST'])
@@ -15,14 +17,16 @@ def group():
     grouplist = {}
     groupfile = item_traversal('conf/groups')
     groupfile = groupfile['conf/groups']
+    print groupfile
     for _ in groupfile:
-        filepath = BASE_DIR + '/conf/groups/' + _
-        with open(filepath, 'rb') as f:
-            content = f.readlines()
-            for _ in content:
-                group_name = (((_.strip('\n')).split('='))[0]).strip().lstrip('@')
-                group_member = ((_.strip('\n')).split('='))[1]
-                grouplist[group_name] = group_member
+        if allowed_file(_, allowed_ext):
+            filepath = BASE_DIR + '/conf/groups/' + _
+            with open(filepath, 'rb') as f:
+                content = f.readlines()
+                for _ in content:
+                    group_name = (((_.strip('\n')).split('='))[0]).strip().lstrip('@')
+                    group_member = ((_.strip('\n')).split('='))[1]
+                    grouplist[group_name] = group_member
     if request.method == 'POST':
         new_group_name = request.form.get('addGroupName', '')
         if new_group_name:

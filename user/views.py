@@ -8,16 +8,11 @@ from flask import (
 )
 from werkzeug.utils import secure_filename
 from manage import app, KEY_DIR
-from utils.traversal import item_traversal
+from utils.widgets import item_traversal, allowed_file
 from index.models import GitUser, GitGroup, GitRepo
 from db.database import db_session
 
-ALLOWED_EXTENSIONS = set(['pub'])
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+allowed_ext = ['pub']
 
 
 @app.route('/user/<filename>')
@@ -43,7 +38,7 @@ def user():
         if file:
             filename = secure_filename(file.filename)
             filepath = os.path.join(KEY_DIR, filename)
-            if not allowed_file(filename):
+            if not allowed_file(filename, allowed_ext):
                 upload_status['status'] = 1
                 print >>f, filename + ' is not a pub key.'
                 return render_template(

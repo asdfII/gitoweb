@@ -18,3 +18,9 @@ def item_traversal(dir):
         if os.path.isdir(l1_abs):
             item_dict[l1_item] = os.listdir(l1_abs)
     return item_dict
+
+
+def allowed_file(filename, extensions):
+    ALLOWED_EXTENSIONS = set(extensions)
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
