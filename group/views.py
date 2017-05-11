@@ -2,15 +2,19 @@
 
 import os
 
-from flask import render_template, redirect, url_for
+from flask import (
+    request,
+    render_template, redirect, url_for
+)
 from manage import app, BASE_DIR
 from utils.traversal import item_traversal
 
 
-@app.route('/group')
+@app.route('/group', methods=['GET', 'POST'])
 def group():
     grouplist = item_traversal('conf/groups')
-    for _ in grouplist['conf/groups']:
+    grouplist = grouplist['conf/groups']
+    for _ in grouplist:
         filepath = BASE_DIR + '/conf/groups/' + _
         with open(filepath, 'rb') as f:
             content = f.readlines()

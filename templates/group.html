@@ -26,24 +26,30 @@
 </ul>
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade in active" id="groupList">
-    <table class="table table-condensed table-striped">
+    <table class="table table-condensed table-hover text-center">
       <thead>
-        <tr class="table table-condensed table-striped">
-          <th>ID</th>
-          <th>Group</th>
-          <th>Action</th>
+        <tr>
+          <th class="text-center">ID</th>
+          <th class="text-center">Group</th>
+          <th class="text-center">Action</th>
+          <th class="text-center">Select
+            <input type="checkbox" onclick="selectAll(this)">
+          </th>
         </tr>
       </thead>
-      <tbody class="table table-condensed table-striped">
-      {% for i in grouplist['conf/groups'] %}
+      <tbody>
+      {% for i in grouplist %}
         {% set counter = loop.index %}
-        <tr>
+        <tr class="text-center">
           <td>{{ counter }}</td>
           <td>{{ i }}</td>
           <td>
             <div class="btn-group">
-              <button type="button" class="btn btn-sm btn-danger" id="deleteGroup">Delete</button>
+              <button type="button" class="btn btn-xs btn-danger" id="deleteGroup">Delete</button>
             </div>
+          </td>
+          <td>
+            <input type="checkbox">
           </td>
         </tr>
       {% endfor %}
@@ -64,4 +70,37 @@
     </table>
   </div>
 </div>
+
+<script>
+  $(function() {
+	  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+		  var activeTab = $(e.target).text();
+		  var previousTab = $(e.relatedTarget).text();
+		  $(".active-tab span").html(activeTab);
+		  $(".previous-tab span").html(previousTab);
+	  });
+  });
+</script>
+
+
+  <input type="checkbox" onclick="selectAll(this)" /> Select All<br><br>
+  <input type="checkbox" name="server_name" value="bar1"> Host01<br>
+  <input type="checkbox" name="server_name" value="bar2"> Host02<br>
+  <input type="checkbox" name="server_name" value="bar3"> Host03<br>
+  <input type="checkbox" name="server_name" value="bar4"> Host04<br>
+
+  <div class="col-sm-1">
+    <a class="btn btn-sm btn-success" id="check_succeed" onclick="getCheckValue('passed')"> Passed </a>
+  </div>
+  <div class="col-sm-1">
+    <a class="btn btn-sm btn-info" id="check_accept" onclick="getCheckValue('accept')"> Accept </a>
+  </div>
+  <div class="col-sm-1">
+    <a class="btn btn-sm btn-warning" id="check_reject" onclick="getCheckValue('reject')"> Reject </a>
+  </div>
+  <div class="col-sm-1">
+    <a class="btn btn-sm btn-danger" id="check_delete" onclick="getCheckValue('failed')"> Failed </a>
+  </div>
+
+
 {% endblock %}

@@ -26,14 +26,14 @@
 </ul>
 <div id="myTabContent" class="tab-content">
   <div class="tab-pane fade in active" id="userList">
-    <table class="table table-condensed table-striped">
+    <table class="table table-condensed table-hover text-center">
       <thead>
-        <tr class="table table-condensed table-striped">
-          <th>ID</th>
-          <th>Key</th>
+        <tr">
+          <th class="text-center">ID</th>
+          <th class="text-center">Key</th>
         </tr>
       </thead>
-      <tbody class="table table-condensed table-striped">
+      <tbody>
       {% for i in keylist.keydir %}
         {% set counter = loop.index %}
         <tr>
