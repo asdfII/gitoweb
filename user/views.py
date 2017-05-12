@@ -29,8 +29,9 @@ def user():
         3: 'Error while writing into db.',
         4: 'Please choose a pub key file.'
     }
+    #~ keydict = item_traversal('keydir')
+    userdict = {}
     upload_status = {'status': '-1'}
-    keylist = item_traversal('keydir')
     
     f = open('log.log', 'ab+')
     if request.method == 'POST':
@@ -77,8 +78,12 @@ def user():
                 upload_status=upload_status,
             )
     f.close()
+    i = 1
+    for _ in db_session.query(GitUser).all():
+        userdict[i] = _.name
+        i += 1
     return render_template(
         'user.html',
-        keylist=keylist,
+        userdict=userdict,
         data=status_dict,
     )

@@ -21,3 +21,8 @@ function selectAllGroup(src) {
         }
     }
 }
+
+function deleteAllGroup() {
+    var items = document.getElementByName('selectAll');
+    items.remove()
+}

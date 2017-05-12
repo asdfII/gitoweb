@@ -8,6 +8,8 @@ from flask import (
 )
 from manage import app, BASE_DIR
 from utils.widgets import item_traversal, allowed_file
+from index.models import GitUser, GitGroup, GitRepo
+from db.database import db_session
 
 allowed_ext = ['conf']
 
