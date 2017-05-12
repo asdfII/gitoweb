@@ -4,27 +4,20 @@ function updatePackage() {
     });
 }
 
-function checkAll(ele) {
+function selectAllGroup(src) {
     var checkboxes = document.getElementsByTagName('input');
-    if (ele.checked) {
+    if (src.checked) {
         for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].type == 'checkbox') {
+            if (checkboxes[i].name == 'selectGroupName') {
                 checkboxes[i].checked = true;
             }
         }
     } else {
         for (var i = 0; i < checkboxes.length; i++) {
             console.log(i)
-            if (checkboxes[i].type == 'checkbox') {
+            if (checkboxes[i].name == 'selectGroupName') {
                 checkboxes[i].checked = false;
             }
         }
-    }
-}
-
-function selectAllGroup(source) {
-    checkboxes = document.getElementsByName('group_name');
-    for(var i = 0, n = checkboxes.length; i < n; i++) {
-        checkboxes[i].checked = source.checked;
     }
 }

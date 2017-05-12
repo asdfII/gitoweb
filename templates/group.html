@@ -34,7 +34,7 @@
           <th class="text-center">Action</th>
           <th class="text-center">
             Select
-            <input type="checkbox" onclick="selectAllGroup(this)">
+            <input type="checkbox" id="selectAll" onclick="selectAllGroup(this)">
           </th>
         </tr>
       </thead>
@@ -50,7 +50,7 @@
             </div>
           </td>
           <td>
-            <input type="checkbox" name="group_name" value="bar1">
+            <input type="checkbox" name="selectGroupName">
           </td>
         </tr>
       {% endfor %}
@@ -84,7 +84,7 @@
   </div>
 </div>
 <script>
-  
+//
 $(function() {
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
         var activeTab = $(e.target).text();
@@ -93,31 +93,5 @@ $(function() {
         $(".previous-tab span").html(previousTab);
     });
 });
-
-/*
-$(function()
-   {
-        $("#chkAll").click(function()
-        {
-            if($(this).attr("checked")==true)
-            {
-
-                $("input[name='chkBulletin']").each(function()
-                {
-                    $(this).attr("checked",true);
-                });
-            }
-            else
-            {
-
-                $("input[name='chkBulletin']").each(function()
-                {
-                    $(this).attr("checked",false);
-                });
-            }
-        });
-   });
-  */
-  
 </script>
 {% endblock %}
