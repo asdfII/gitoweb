@@ -23,6 +23,6 @@ function selectAllGroup(src) {
 }
 
 function deleteAllGroup() {
-    var items = document.getElementByName('selectAll');
+    var items = document.getElementById('selectAll');
     items.remove()
 }

@@ -46,7 +46,7 @@ def user():
                     'upload.html',
                     upload_status=upload_status,
                 )
-            if os.path.isfile(filepath):
+            if os.path.exists(filepath):
                 upload_status['status'] = 2
                 return render_template(
                     'upload.html',
@@ -78,10 +78,8 @@ def user():
                 upload_status=upload_status,
             )
     f.close()
-    i = 1
     for _ in db_session.query(GitUser).all():
-        userdict[i] = _.name
-        i += 1
+        userdict[_.id] = _.name
     return render_template(
         'user.html',
         userdict=userdict,
