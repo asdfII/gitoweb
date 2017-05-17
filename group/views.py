@@ -19,7 +19,6 @@ def group():
     grouplist = {}
     groupfile = item_traversal('conf/groups')
     groupfile = groupfile['conf/groups']
-    print groupfile
     for _ in groupfile:
         if allowed_file(_, allowed_ext):
             filepath = BASE_DIR + '/conf/groups/' + _

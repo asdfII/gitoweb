@@ -24,11 +24,11 @@
   <li class="active"><a href="#userList" data-toggle="tab"><strong>Users</strong></a></li>
   <li><a href="#userUpload" data-toggle="tab"><strong>Public Keys</strong></a></li>
 </ul>
-<div id="myTabContent" class="tab-content">
+<div id="userTabContent" class="tab-content">
   <div class="tab-pane fade in active" id="userList">
     <table class="table table-condensed table-hover text-center">
       <thead>
-        <tr">
+        <tr>
           <th class="text-center">ID</th>
           <th class="text-center">Key</th>
           <th class="text-center">Group</th>
@@ -43,7 +43,7 @@
           <td>{{ user_name }}</td>
           <td>{{ user_name }}</td>
           <td class="col-md-3">
-            <select class="form-control" name="groupName" id="groupId">
+            <select class="form-control" name="userGroupName" id="userGroupId">
               {% for group_id, group_name in groupdict.iteritems() %}
               <option value="{{ group_name }}">{{ group_name }}</option>
               {% endfor %}
