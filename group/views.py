@@ -18,7 +18,10 @@ allowed_ext = ['conf']
 def group():
     grouplist = {}
     groupfile = item_traversal('conf/groups')
-    groupfile = groupfile['conf/groups']
+    try:
+        groupfile = groupfile['conf/groups']
+    except:
+        groupfile = {}
     for _ in groupfile:
         if allowed_file(_, allowed_ext):
             filepath = BASE_DIR + '/conf/groups/' + _
