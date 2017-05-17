@@ -32,6 +32,7 @@ def user():
     #~ keydict = item_traversal('keydir')
     userdict = {}
     groupdict = {}
+    assigngroup = {}
     upload_status = {'status': '-1'}
     
     f = open('log.log', 'ab+')
@@ -80,6 +81,9 @@ def user():
                 upload_status=upload_status,
             )
     f.close()
+    
+    assigngroup = {}
+    
     for _ in db_session.query(GitUser).all():
         userdict[_.id] = _.name.rstrip('.pub')
     for _ in db_session.query(GitGroup).all():
@@ -89,5 +93,6 @@ def user():
         'user.html',
         userdict=userdict,
         groupdict=groupdict,
-        data=status_dict,
+        status_dict=status_dict,
+        assigngroup=assigngroup,
     )

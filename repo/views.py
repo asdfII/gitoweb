@@ -1,10 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template
-from manage import app
+import os
+
+from flask import (
+    request,
+    render_template, redirect, url_for
+)
+from manage import app, BASE_DIR
+from utils.widgets import item_traversal, allowed_file
+from index.models import GitUser, GitGroup, GitRepo
+from db.database import db_session
+
+allowed_ext = ['conf']
 
 
-@app.route('/repo')
+@app.route('/repo', methods=['GET', 'POST'])
 def repo():
     return render_template('repo.html')
 

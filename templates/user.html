@@ -41,9 +41,15 @@
         <tr>
           <td>{{ counter }}</td>
           <td>{{ user_name }}</td>
-          <td>{{ user_name }}</td>
           <td class="col-md-3">
-            <select class="form-control" name="userGroupName" id="userGroupId">
+            <select name="userGroupName" id="userGroupId">
+              {% for group_id, group_name in groupdict.iteritems() %}
+              <option value="{{ group_name }}">{{ group_name }}</option>
+              {% endfor %}
+            </select>
+          </td>
+          <td class="col-md-3">
+            <select name="addIntoGroupName" id="addIntoGroupId">
               {% for group_id, group_name in groupdict.iteritems() %}
               <option value="{{ group_name }}">{{ group_name }}</option>
               {% endfor %}
@@ -54,6 +60,7 @@
       </tbody>
     </table>
   </div>
+  {{ assigngroup }}
   <div class="tab-pane fade" id="userUpload">
     <table class="table table-condensed">
       <thead>
@@ -86,7 +93,7 @@
       <a href="#" class="close" data-dismiss="alert">&times;</a>
       <strong>success</strong>OK
     </div>
-    {% if data.status|int == 4 %}
+    {% if status_dict.status|int == 4 %}
     <div id="myAlert" class="alert alert-warning">
       <a href="" class="close" data-dismiss="alert">&times;</a>
       <strong>warning: </strong>Please choose a pub key file.
