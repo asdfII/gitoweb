@@ -28,11 +28,11 @@ obj = MyModel.query.get(the_id)
 (model.thread_count + model.post_count) + :param_1
 >>> print MyModel.id.between(1, 10) & MyModel.name.startswith('a')
 model.model_id BETWEEN :model_id_1 AND :model_id_2 AND
-    model.name LIKE :name_1 || '%%'
+model.name LIKE :name_1 || '%%'
 
 active_users_with_a_or_b = User.query.filter(
-    (User.name.startswith('a') | User.name.startswith('b')) &
-    (User.is_active == True)
+(User.name.startswith('a') | User.name.startswith('b')) &
+(User.is_active == True)
 ).all()
 
 
@@ -40,8 +40,8 @@ active_users_with_a_or_b = User.query.filter(
 from sqlalchemy.sql import extract
 
 entries_a_month = Entry.query.filter(
-    (extract(Entry.pub_date, 'year') == 2011) &
-    (extract(Entry.pub_date, 'month') == 1)
+(extract(Entry.pub_date, 'year') == 2011) &
+(extract(Entry.pub_date, 'month') == 1)
 ).all()
 
 
@@ -62,3 +62,21 @@ posts = Post.query.join(Author).filter(Author.name == the_author_name)
 
 author_query = Author.query.filter(Author.name == the_author_name)
 posts = Post.query.filter(Post.author_id.in_(author_query))
+
+
+# Show when group.id = 2
+print '==================================='
+results = GitUser.query.filter(
+GitUser.git_group.any(id=2)
+).all()
+for _ in results:
+print _.name
+
+
+# Show when user.id = 1
+print '==================================='
+res = GitGroup.query.filter(
+GitGroup.git_user.any(id=1)
+).all()
+for _ in res:
+print _.name

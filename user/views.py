@@ -83,6 +83,12 @@ def user():
     f.close()
     
     assigngroup = {}
+    res = GitGroup.query.filter(
+        GitGroup.git_user.any(id=1)
+    ).all()
+    for _ in res:
+        print _.name
+    
     
     for _ in db_session.query(GitUser).all():
         userdict[_.id] = _.name.rstrip('.pub')
