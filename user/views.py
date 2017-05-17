@@ -31,6 +31,7 @@ def user():
     }
     #~ keydict = item_traversal('keydir')
     userdict = {}
+    groupdict = {}
     upload_status = {'status': '-1'}
     
     f = open('log.log', 'ab+')
@@ -58,6 +59,7 @@ def user():
                 new_user = GitUser(name=filename)
                 db_session.add(new_user)
                 db_session.commit()
+                db_session.close()
                 upload_status['status'] = 0
                 return render_template(
                     'upload.html',
@@ -65,6 +67,7 @@ def user():
                 )
             except:
                 db_session.rollback()
+                db_session.close()
                 os.remove(filepath)
                 upload_status['status'] = 3
                 return render_template(
@@ -79,9 +82,13 @@ def user():
             )
     f.close()
     for _ in db_session.query(GitUser).all():
-        userdict[_.id] = _.name
+        userdict[_.id] = _.name.rstrip('.pub')
+    for _ in db_session.query(GitGroup).all():
+        groupdict[_.id] = _.name.rstrip('.pub')
+    db_session.close()
     return render_template(
         'user.html',
         userdict=userdict,
+        groupdict=groupdict,
         data=status_dict,
     )

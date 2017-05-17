@@ -32,8 +32,17 @@ def group():
     if request.method == 'POST':
         new_group_name = request.form.get('addGroupName', '')
         if new_group_name:
-            group_add(new_group_name)
-            return redirect(url_for('group'))
+            try:
+                new_group = GitGroup(name=new_group_name)
+                db_session.add(new_group)
+                db_session.commit()
+                db_session.close()
+                group_add(new_group_name)
+            except:
+                db_session.rollback()
+                db_session.close()
+                os.remove(os.path.join(filepath, new_group_name))
+        return redirect(url_for('group'))
     return render_template(
         'group.html',
         #~ grouplist=groupfile,
