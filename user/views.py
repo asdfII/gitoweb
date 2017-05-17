@@ -53,13 +53,13 @@ def user():
                     'upload.html',
                     upload_status=upload_status,
                 )
-            file.save(filepath)
-            print >>f, filename + ' has been saved locally.'
             try:
                 new_user = GitUser(name=filename)
                 db_session.add(new_user)
                 db_session.commit()
                 db_session.close()
+                file.save(filepath)
+                print >>f, filename + ' has been saved locally.'
                 upload_status['status'] = 0
                 return render_template(
                     'upload.html',
@@ -68,7 +68,6 @@ def user():
             except:
                 db_session.rollback()
                 db_session.close()
-                os.remove(filepath)
                 upload_status['status'] = 3
                 return render_template(
                     'upload.html',
