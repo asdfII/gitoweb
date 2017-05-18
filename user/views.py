@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
-import os, json
+import os
+try:
+    import simplejson as json
+except:
+    import json
 
 from flask import (
     request, send_from_directory,
