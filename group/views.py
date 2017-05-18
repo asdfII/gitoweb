@@ -20,7 +20,7 @@ allowed_ext = ['conf']
 
 @app.route('/group', methods=['GET', 'POST'])
 def group():
-    grouplist = {}
+    groupdict = {}
     groupfile = item_traversal('conf/groups')
     try:
         groupfile = groupfile['conf/groups']
@@ -34,7 +34,7 @@ def group():
                 for _ in content:
                     group_name = (((_.strip('\n')).split('='))[0]).strip().lstrip('@')
                     group_member = ((_.strip('\n')).split('='))[1]
-                    grouplist[group_name] = group_member
+                    groupdict[group_name] = group_member
     if request.method == 'POST':
         new_group_name = request.form.get('addGroupName', '')
         if new_group_name:
@@ -51,8 +51,8 @@ def group():
         return redirect(url_for('group'))
     return render_template(
         'group.html',
-        #~ grouplist=groupfile,
-        grouplist=grouplist,
+        #~ groupfile=groupfile,
+        groupdict=groupdict,
     )
 
 

@@ -101,8 +101,8 @@ def user():
     db_session.close()
     return render_template(
         'user.html',
+        status_dict=status_dict,
         userdict=userdict,
         groupdict=groupdict,
-        status_dict=status_dict,
         assignedgroup=assignedgroup,
     )

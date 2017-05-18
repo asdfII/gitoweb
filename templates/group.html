@@ -27,27 +27,30 @@
 
 <!-- <h1 class="page-header">Groups</h1> -->
 <ul id="myTab" class="nav nav-tabs">
-  <li class="active"><a href="#groupList" data-toggle="tab"><strong>Groups</strong></a></li>
+  <li class="active"><a href="#groupDict" data-toggle="tab"><strong>Groups</strong></a></li>
   <li><a href="#groupManager" data-toggle="tab"><strong>Group Manager</strong></a></li>
 </ul>
 <div id="groupTabContent" class="tab-content">
-  <div class="tab-pane fade in active" id="groupList">
+  <div class="tab-pane fade in active" id="groupDict">
     <table class="table table-condensed table-hover text-center">
       <thead>
         <tr>
-          <th class="text-center">ID</th>
-          <th class="text-center">Group</th>
           <th class="text-center">
-            Select
-            <input type="checkbox" id="selectAllGroup" onclick="selectAllGroup(this)">
+            <!-- <input type="checkbox" id="selectAllUser" onclick="selectAllUser(this)"> -->
+            ID
           </th>
+          <th class="text-center">Group</th>
+          <th class="text-center">Action</th>
         </tr>
       </thead>
       <tbody>
-      {% for i in grouplist %}
+      {% for i in groupdict %}
         {% set counter = loop.index %}
         <tr class="text-center">
-          <td>{{ counter }}</td>
+          <td>
+            <!-- <input type="checkbox" name="selectUserName"> -->
+            {{ counter }}
+          </td>
           <td>{{ i }}</td>
 <!--           <td>
             <div class="btn-group">
@@ -55,7 +58,11 @@
             </div>
           </td> -->
           <td>
-            <input type="checkbox" name="selectGroupName">
+            <div class="btn-group">
+              <div style="color:orange;" class="glyphicon glyphicon-repeat" id="renameGroupId" onclick="alert('rename')"></div>
+              <span>|</span>
+              <div style="color:red;" class="glyphicon glyphicon-remove" id="removeGroupId" onclick="alert('remove')"></div>
+            </div>
           </td>
         </tr>
       {% endfor %}

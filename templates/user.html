@@ -53,21 +53,24 @@
             {{ counter }}
           </td>
           <td>{{ user_name }}</td>
-          <td class="col-md-3">
+          <td>
             <select class="btn btn-sm" name="userGroupName" id="userGroupId">
             {% for assignedgroup_name in assignedgroup[user_id] %}
               <option value="{{ assignedgroup_name }}">{{ assignedgroup_name }}</option>
             {% endfor %}
           </td>
-          <td class="col-md-3">
-            <div class="btn-toolbar" role="toolbar">
+          <td>
+            <div class="btn-group">
               <select class="btn btn-sm" name="addIntoGroupName" id="addIntoGroupId">
                 {% for group_id, group_name in groupdict.iteritems() %}
-                <option value="{{ group_name }}">{{ group_name }}</option>
+                <option value="{{ group_name }}">{{ group_id }}.{{ group_name }}</option>
                 {% endfor %}
               </select>
-                <input type="button" class="col-md-3 btn btn-sm btn-primary" id="addIntoGroupId" value="add">
-                <input type="button" class="col-md-3 btn btn-sm btn-danger" id="removeFromGroupId" value="remove">
+              <!-- <input type="button" class="btn btn-sm btn-primary" id="addIntoGroupId" value="add">
+              <input type="button" class="btn btn-sm btn-danger" id="removeFromGroupId" value="remove"> -->
+              <div style="color:green;" class="glyphicon glyphicon-ok" id="addIntoGroupId" onclick="alert('ok')"></div>
+              <span>|</span>
+              <div style="color:red;" class="glyphicon glyphicon-remove" id="removeFromGroupId" onclick="alert('remove')"></div>
             </div>
           </td>
         </tr>
