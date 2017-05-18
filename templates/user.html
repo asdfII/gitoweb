@@ -35,9 +35,6 @@
           <th class="text-center">Action</th>
         </tr>
       </thead>
-      {{ userdict }}
-      <br>
-      {{ assigneddict }}
       <tbody>
       {% for user_id, user_name  in userdict.iteritems() %}
         {% set counter = loop.index %}
@@ -45,18 +42,27 @@
           <td>{{ counter }}</td>
           <td>{{ user_name }}</td>
           <td class="col-md-3">
-            <select name="userGroupName" id="userGroupId">
+            {#{% for assignedgroup_id, assignedgroup_name in assignedgroup.iteritems() %}#}
+            
+            
+            
+            <select class="btn btn-sm" name="userGroupName" id="userGroupId">
               {% for assignedgroup_id, assignedgroup_name in assignedgroup.iteritems() %}
-              <option value="{{ assignedgroup_name }}">{{ assignedgroup_name }}</option>
+              <!-- <option value="{{ assignedgroup_name[1] }}">{{ assignedgroup_name[1] }}</option> -->
+              <option value="{{ assignedgroup_name }}">{{ assignedgroup_name['name'] }}</option>
               {% endfor %}
             </select>
           </td>
           <td class="col-md-3">
-            <select name="addIntoGroupName" id="addIntoGroupId">
+            <div>
+            <select class="btn btn-sm" name="addIntoGroupName" id="addIntoGroupId">
               {% for group_id, group_name in groupdict.iteritems() %}
               <option value="{{ group_name }}">{{ group_name }}</option>
               {% endfor %}
             </select>
+              <input type="button" class="btn btn-sm btn-success" id="addIntoGroupId" value="add">
+              <input type="button" class="btn btn-sm btn-danger" id="removeFromGroupId" value="remove">
+            </div>
           </td>
         </tr>
       {% endfor %}

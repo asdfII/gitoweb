@@ -32,6 +32,7 @@ def user():
     #~ keydict = item_traversal('keydir')
     userdict = {}
     groupdict = {}
+    assignedlist = []
     assignedgroup = {}
     upload_status = {'status': '-1'}
     
@@ -81,17 +82,20 @@ def user():
                 upload_status=upload_status,
             )
     f.close()
-    assigneddict = {}
-    for _ in db_session.query(GitUser).all():
-        userdict[_.id] = _.name
-    for _ in db_session.query(GitGroup).all():
-        groupdict[_.id] = _.name
+    
+    for gituser in db_session.query(GitUser).all():
+        userdict[gituser.id] = gituser.name
+        #~ GitUser.query.filter(GitUser.name==gituser.name).all()
+    for gitgroup in db_session.query(GitGroup).all():
+        groupdict[gitgroup.id] = gitgroup.name
     for i in xrange(1, len(userdict)+1):
-        print userdict[i]
-        for _ in GitGroup.query.filter(
-            GitGroup.git_user.any(id=i)).all():
-            assignedgroup[_.id] = _.name
-            assigneddict[_.id] = assignedgroup
+        queries = GitGroup.query.filter(GitGroup.git_user.any(id=i)).all()
+        #~ print queries
+        for query in queries:
+            assignedlist.append(query.name)
+        assignedgroup[i] = assignedlist
+        assignedlist = []
+    #~ print assignedgroup
     db_session.close()
     return render_template(
         'user.html',
@@ -99,5 +103,4 @@ def user():
         groupdict=groupdict,
         status_dict=status_dict,
         assignedgroup=assignedgroup,
-        assigneddict=assigneddict,
     )
