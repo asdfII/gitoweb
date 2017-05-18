@@ -35,6 +35,9 @@
           <th class="text-center">Action</th>
         </tr>
       </thead>
+      {{ userdict }}
+      <br>
+      {{ assigneddict }}
       <tbody>
       {% for user_id, user_name  in userdict.iteritems() %}
         {% set counter = loop.index %}
@@ -43,8 +46,8 @@
           <td>{{ user_name }}</td>
           <td class="col-md-3">
             <select name="userGroupName" id="userGroupId">
-              {% for group_id, group_name in groupdict.iteritems() %}
-              <option value="{{ group_name }}">{{ group_name }}</option>
+              {% for assignedgroup_id, assignedgroup_name in assignedgroup.iteritems() %}
+              <option value="{{ assignedgroup_name }}">{{ assignedgroup_name }}</option>
               {% endfor %}
             </select>
           </td>
@@ -60,7 +63,6 @@
       </tbody>
     </table>
   </div>
-  {{ assigngroup }}
   <div class="tab-pane fade" id="userUpload">
     <table class="table table-condensed">
       <thead>
