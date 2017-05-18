@@ -42,16 +42,10 @@
           <td>{{ counter }}</td>
           <td>{{ user_name }}</td>
           <td class="col-md-3">
-            {#{% for assignedgroup_id, assignedgroup_name in assignedgroup.iteritems() %}#}
-            
-            
-            
             <select class="btn btn-sm" name="userGroupName" id="userGroupId">
-              {% for assignedgroup_id, assignedgroup_name in assignedgroup.iteritems() %}
-              <!-- <option value="{{ assignedgroup_name[1] }}">{{ assignedgroup_name[1] }}</option> -->
-              <option value="{{ assignedgroup_name }}">{{ assignedgroup_name['name'] }}</option>
-              {% endfor %}
-            </select>
+            {% for assignedgroup_name in assignedgroup[user_id] %}
+              <option value="{{ assignedgroup_name }}">{{ assignedgroup_name }}</option>
+            {% endfor %}
           </td>
           <td class="col-md-3">
             <div>
@@ -60,8 +54,8 @@
               <option value="{{ group_name }}">{{ group_name }}</option>
               {% endfor %}
             </select>
-              <input type="button" class="btn btn-sm btn-success" id="addIntoGroupId" value="add">
-              <input type="button" class="btn btn-sm btn-danger" id="removeFromGroupId" value="remove">
+              <input type="button" class="col-md-3 btn btn-sm btn-primary" id="addIntoGroupId" value="add">
+              <input type="button" class="col-md-3 btn btn-sm btn-danger" id="removeFromGroupId" value="remove">
             </div>
           </td>
         </tr>

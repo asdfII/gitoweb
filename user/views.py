@@ -82,20 +82,18 @@ def user():
                 upload_status=upload_status,
             )
     f.close()
-    
     for gituser in db_session.query(GitUser).all():
         userdict[gituser.id] = gituser.name
-        #~ GitUser.query.filter(GitUser.name==gituser.name).all()
     for gitgroup in db_session.query(GitGroup).all():
         groupdict[gitgroup.id] = gitgroup.name
-    for i in xrange(1, len(userdict)+1):
-        queries = GitGroup.query.filter(GitGroup.git_user.any(id=i)).all()
-        #~ print queries
+    for i in userdict.keys():
+        queries = GitGroup.query.filter(
+            GitGroup.git_user.any(id=i)
+        ).all()
         for query in queries:
             assignedlist.append(query.name)
         assignedgroup[i] = assignedlist
         assignedlist = []
-    #~ print assignedgroup
     db_session.close()
     return render_template(
         'user.html',
