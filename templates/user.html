@@ -35,7 +35,10 @@
     <table class="table table-condensed table-hover text-center">
       <thead>
         <tr>
-          <th class="text-center">ID</th>
+          <th class="text-center">
+            <input type="checkbox" id="selectAllUser" onclick="selectAllGroup(this)">
+            ID
+          </th>
           <th class="text-center">Key</th>
           <th class="text-center">Group</th>
           <th class="text-center">Action</th>
@@ -45,7 +48,10 @@
       {% for user_id, user_name  in userdict.iteritems() %}
         {% set counter = loop.index %}
         <tr>
-          <td>{{ counter }}</td>
+          <td>
+            <input type="checkbox" name="selectUserName">
+            {{ counter }}
+          </td>
           <td>{{ user_name }}</td>
           <td class="col-md-3">
             <select class="btn btn-sm" name="userGroupName" id="userGroupId">
