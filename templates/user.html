@@ -48,14 +48,14 @@
             {% endfor %}
           </td>
           <td class="col-md-3">
-            <div>
-            <select class="btn btn-sm" name="addIntoGroupName" id="addIntoGroupId">
-              {% for group_id, group_name in groupdict.iteritems() %}
-              <option value="{{ group_name }}">{{ group_name }}</option>
-              {% endfor %}
-            </select>
-              <input type="button" class="col-md-3 btn btn-sm btn-primary" id="addIntoGroupId" value="add">
-              <input type="button" class="col-md-3 btn btn-sm btn-danger" id="removeFromGroupId" value="remove">
+            <div class="btn-toolbar" role="toolbar">
+              <select class="btn btn-sm" name="addIntoGroupName" id="addIntoGroupId">
+                {% for group_id, group_name in groupdict.iteritems() %}
+                <option value="{{ group_name }}">{{ group_name }}</option>
+                {% endfor %}
+              </select>
+                <input type="button" class="col-md-3 btn btn-sm btn-primary" id="addIntoGroupId" value="add">
+                <input type="button" class="col-md-3 btn btn-sm btn-danger" id="removeFromGroupId" value="remove">
             </div>
           </td>
         </tr>
