@@ -16,6 +16,14 @@
 
 {% block content %}
 
-<h1 class="page-header">Ceshi</h1>
+<!-- <h1 class="page-header">Ceshi</h1> -->
 {{ ceshidict }}
+<br>
+<input type="button" value="Click me" onclick="alert('Hi')">
+<script type="text/javascript">
+var i = 'someone';
+console.log(i);
+</script>
+<br>
+{{ context.ceshistring }}
 {% endblock %}
