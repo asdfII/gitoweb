@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Gitoweb{% endblock %}
+
+{% block bar %}
+  <li class="active"><a href="#">HomePage<span class="badge">12</span></a></li>
+  <li><a href="#">Info</a></li>
+  <li><a href="#">Message<span class="badge">3</span></a></li>
+{% endblock %}
+
+{% block nav %}
+  <li class="active">
+    <a href="{{ url_for('ceshi') }}"><span class="glyphicon glyphicon-trash"></span> Ceshi Page
+    <span class="sr-only">(current)</span></a>
+  </li>
+{% endblock %}
+
+{% block content %}
+
+<h1 class="page-header">Ceshi</h1>
+{{ ceshidict }}
+{% endblock %}

@@ -11,11 +11,6 @@ from index.models import GitUser, GitGroup, GitRepo
 from db.database import db_session
 
 
-@app.route('/test')
-def testpage():
-    return render_template('test.html')
-
-
 @app.route('/', methods=['Get'])
 def index():
     try:

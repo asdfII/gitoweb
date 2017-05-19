@@ -43,7 +43,12 @@
           <th class="text-center">Action</th>
         </tr>
       </thead>
-      {{ groupdict }}
+    <script type="text/javascript">
+    var grouplist = {{ groupdict|safe }}
+    for (var i in grouplist) {
+        console.log(grouplist[i]);
+    }
+    </script>
       <tbody>
       {% for i in groupdict %}
         {% set counter = loop.index %}
@@ -60,9 +65,9 @@
           </td> -->
           <td>
             <div class="btn-group">
-              <div style="color:orange;" class="glyphicon glyphicon-pencil" id="renameGroupId" onclick="alert('rename')"></div>
+              <div style="color:#FF9933;" class="glyphicon glyphicon-pencil" id="renameGroupId" onclick="alert('rename')"></div>
               <span>|</span>
-              <div style="color:red;" class="glyphicon glyphicon-minus" id="removeGroupId" onclick="alert('remove')"></div>
+              <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeGroupId" onclick="alert('remove')"></div>
             </div>
           </td>
         </tr>
