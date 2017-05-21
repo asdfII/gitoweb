@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <!-- jQuery -->
+    <script src="/static/assets/js/jquery.min.js"></script>
+    <script src="/static/assets/js/myjs.js"></script>
+    
+    <!-- React -->
+    <script src="/static/react/react.js"></script>
+    <script src="/static/react/react-dom.js"></script>
+    <script src="/static/react/browser.min.js"></script>
+    <style>
+      #result {
+        margin-top: 20px,\;
+        color: red;
+      }
+    </style>
+  </head>
+
+  <body>
+    <form action="ceshi-ajax" method="post" role="form">
+      Username: <input type="text" name="username" placeholder="username">
+      <br>
+      Password: <input type="password" name="password" placeholder="password">
+      <br>
+      <select name="ceshi-selecctor">
+        <option>item01</option>
+        <option>item02</option>
+        <option>item03</option>
+        <option>item04</option>
+      </select>
+      <input class="btn" type="submit" value="click">
+      
+      <div id="result"></div>
+    </form>
+    
+    <script type="text/javascript">
+    //
+    $(function() {
+        $('.btn').click(function() {
+            var $result = $('#result');
+            var $username = $('input[name="username"]').val();
+            var $username = $('input[name="password"]').val();
+            $.ajax({
+                url: '/ceshi-ajax',
+                data: $('form').serialize(),
+                type: 'POST',
+                dataType: 'json',
+            }).done(function(data) {
+                if (!data.r) {
+                    $result.html(data.rs);
+                } else {
+                    $result.html(data.error);
+                }
+            });
+        });
+    });
+    </script>
+  </body>
+</html>

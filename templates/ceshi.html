@@ -19,11 +19,18 @@
 <!-- <h1 class="page-header">Ceshi</h1> -->
 {{ ceshidict }}
 <br>
-<input type="button" value="Click me" onclick="alert('Hi')">
 <script type="text/javascript">
-var i = 'someone';
-console.log(i);
+var items = {{ ceshidict|safe }};  // python_ceshidict_dict
+var items_string = {{ ceshistring|tojson|safe }};  // ceshistring is a python dumps obj
+console.log(items);  // Object {alphaz: Array(2), user02: Array(0), user01: Array(1)}
+console.log(items_string);  // ["{"alphaz": ["admin", "superuser"], "user02": [], "user01": ["superuser"]}"]
+
+function delItem() {
+    items['alphaz'] = ['love', 'you'];
+    console.log(items);
+}
 </script>
+<input type="button" value="Delete" onclick="delItem()">
 <br>
-{{ context.ceshistring }}
+{{ ceshidict }}
 {% endblock %}

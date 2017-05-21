@@ -9,6 +9,7 @@ except:
 from flask import (
     request,
     render_template, redirect, url_for
+    jsonify,
 )
 from manage import app, BASE_DIR
 from utils.widgets import item_traversal, allowed_file
@@ -18,12 +19,31 @@ from db.database import db_session
 
 @app.route('/ceshi')
 def ceshi():
-    ceshidict = {'x': 1, 'y': 2, 'z': 3}
-    context = {
-        'ceshistring': json.dumps(ceshidict),
+    ceshidict = {
+        'alphaz': ['admin', 'superuser'],
+        'user01': ['superuser'],
+        'user02': []
     }
+    ceshistring = json.dumps(ceshidict),
     return render_template(
         'ceshi.html',
         ceshidict=ceshidict,
-        context=context,
+        ceshistring=ceshistring,
     )
+
+
+@app.route('/ceshi-ajax', methods=['GET', 'POST'])
+def ceshi_ajax():
+    if request.method == 'POST':
+        username = request.form.get('username', '')
+        password = request.form.get('password', '')
+        error = None
+        if len(username) < 5:
+            error = 'Password must be at least 5 characters.'
+        if lent(password) < 6:
+            error = 'Password must be at least 6 characters.'
+        elif not any(c.isupper() for c in password):
+            error = 'Your password needs at least 1 capital.'
+        if error is not None:
+            return jsonify({'r': 1, 'error': error})
+    return jsonify({'r': 0, 'rs': 'It\'s ok'})
