@@ -8,7 +8,7 @@ except:
 
 from flask import (
     request,
-    render_template, redirect, url_for
+    render_template, redirect, url_for,
     jsonify,
 )
 from manage import app, BASE_DIR
@@ -32,7 +32,7 @@ def ceshi():
     )
 
 
-@app.route('/ceshi-ajax', methods=['GET', 'POST'])
+@app.route('/ceshi-a', methods=['GET', 'POST'])
 def ceshi_ajax():
     if request.method == 'POST':
         username = request.form.get('username', '')
@@ -40,10 +40,11 @@ def ceshi_ajax():
         error = None
         if len(username) < 5:
             error = 'Password must be at least 5 characters.'
-        if lent(password) < 6:
+        if len(password) < 6:
             error = 'Password must be at least 6 characters.'
         elif not any(c.isupper() for c in password):
             error = 'Your password needs at least 1 capital.'
         if error is not None:
             return jsonify({'r': 1, 'error': error})
-    return jsonify({'r': 0, 'rs': 'It\'s ok'})
+        return jsonify({'r': 0, 'rs': 'ok'})
+    return render_template('ceshi-a.html')

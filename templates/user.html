@@ -54,23 +54,27 @@
           </td>
           <td>{{ user_name }}</td>
           <td>
-            <select class="btn btn-sm" name="userGroupName" id="userGroupId">
+            <select class="btn btn-sm" name="userGroupName-{{ user_id }}" id="userGroupId-{{ user_id }}">
             {% for assignedgroup_name in assignedgroup[user_id] %}
               <option value="{{ assignedgroup_name }}">{{ assignedgroup_name }}</option>
             {% endfor %}
           </td>
           <td>
             <div class="btn-group">
-              <select class="btn btn-sm" name="addIntoGroupName" id="addIntoGroupId">
-                {% for group_id, group_name in groupdict.iteritems() %}
-                <option value="{{ group_name }}">{{ group_id }}.{{ group_name }}</option>
-                {% endfor %}
-              </select>
-              <!-- <input type="button" class="btn btn-sm btn-primary" id="addIntoGroupId" value="add">
-              <input type="button" class="btn btn-sm btn-danger" id="removeFromGroupId" value="remove"> -->
-              <div style="color:#33CC33;" class="glyphicon glyphicon-plus" id="addIntoGroupId" onclick="alert('ok')"></div>
-              <span>|</span>
-              <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromGroupId" onclick="alert('remove')"></div>
+              <form class="form-inline" method="POST" role="form">
+                <select class="btn btn-sm" name="addIntoGroupName-{{ user_id }}" id="addIntoGroupId-{{ user_id }}">
+                  {% for group_id, group_name in groupdict.iteritems() %}
+                  <option value="{{ group_id }}">{{ group_name }}</option>
+                  {% endfor %}
+                </select>
+                <!-- <input type="button" class="btn btn-sm btn-primary" id="addIntoGroupId" value="add">
+                <input type="button" class="btn btn-sm btn-danger" id="removeFromGroupId" value="remove"> -->
+                <div style="color:#33CC33;" class="glyphicon glyphicon-plus" id="addIntoGroupId-{{ user_id }}"
+                  onclick="javascript:this.parentNode.submit()"></div>
+                <span>|</span>
+                <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromGroupId-{{ user_id }}"
+                  onclick="javascript:this.parentNode.submit()"></div>
+              </form>
             </div>
           </td>
         </tr>
@@ -88,7 +92,7 @@
       <tbody>
         <tr>
           <td>
-            <form class="form-inline" role="form" method="POST" enctype="multipart/form-data">
+            <form class="form-inline" method="POST" role="form" enctype="multipart/form-data">
               <div class="form-group">
                 <label class="sr-only" for="inputfile">Key Path</label>
                 <input type="file" id="inputfile" name="keyFile" style="display:none" multiple>
@@ -115,14 +119,7 @@
       <a href="" class="close" data-dismiss="alert">&times;</a>
       <strong>warning: </strong>Please choose a pub key file.
     </div>
-    {% endif %}
-    <script type="text/javascript">
-    $(function(){
-        $(".close").click(function(){
-            $("#myAlert").alert();
-        });
-    });
-    </script>#}-->
+    {% endif %}#}-->
   </div>
 </div>
 <script type="text/javascript">
