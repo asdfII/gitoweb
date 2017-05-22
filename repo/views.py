@@ -8,7 +8,7 @@ except:
 
 from flask import (
     request,
-    render_template, redirect, url_for
+    render_template, redirect, url_for, abort,
 )
 from manage import app, BASE_DIR
 from utils.widgets import item_traversal, allowed_file
@@ -20,50 +20,40 @@ allowed_ext = ['conf']
 
 @app.route('/repo', methods=['GET', 'POST'])
 def repo():
-    return render_template('repo.html')
-
-
-'''
-# -*- coding: utf-8 -*-
-
-import os
-
-from flask import (
-    request,
-    render_template, redirect, url_for
-)
-from manage import app, BASE_DIR
-from utils.widgets import item_traversal, allowed_file
-from index.models import GitUser, GitGroup, GitRepo
-from db.database import db_session
-
-allowed_ext = ['conf']
-
-
-@app.route('/repo', methods=['GET', 'POST'])
-def repo():
-    repolist = {}
+    repodict = {}
     repofile = item_traversal('conf/repos')
-    repofile = repofile['conf/repos']
-    print repofile
+    try:
+        repofile = repofile['conf/repos']
+    except:
+        repofile = {}
     for _ in repofile:
         if allowed_file(_, allowed_ext):
             filepath = BASE_DIR + '/conf/repos/' + _
             with open(filepath, 'rb') as f:
                 content = f.readlines()
                 for _ in content:
-                    repo_name = (((_.strip('\n')).split('='))[0]).strip().lstrip('@')
-                    repo_member = ((_.strip('\n')).split('='))[1]
-                    repolist[repo_name] = repo_member
+                    if '=' in _:
+                        repo_name = (((_.strip('\n')).split('='))[0]).strip().lstrip('@')
+                        repo_member = ((_.strip('\n')).split('='))[1]
+                        repodict[repo_name] = repo_member
+    print repodict
     if request.method == 'POST':
         new_repo_name = request.form.get('addRepoName', '')
         if new_repo_name:
-            repo_add(new_repo_name)
-            return redirect(url_for('repo'))
+            try:
+                new_repo = GitRepo(name=new_repo_name)
+                db_session.add(new_repo)
+                db_session.commit()
+                repo_init(new_repo_name)
+            except:
+                db_session.rollback()
+                os.remove(os.path.join(filepath, new_repo_name))
+            db_session.close()
+        return redirect(url_for('repo'))
     return render_template(
         'repo.html',
-        #~ repolist=repofile,
-        repolist=repolist,
+        #~ repofile=repofile,
+        repodict=repodict,
     )
 
 
@@ -76,4 +66,4 @@ def repo_add(repo_name):
     return redirect(
         url_for('repo')
     )
-'''
+

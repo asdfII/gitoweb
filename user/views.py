@@ -53,72 +53,51 @@ def user():
         assignedlist = []
     
     f = open('log.log', 'ab+')
-    if request.method == 'POST':
-        for request_key in request.form.keys():
-            if 'addIntoGroupName' in request_key:
-                get_user_id = int(request_key.split('-')[1])
-                get_group_id = request.form.get(request_key, '')
-                try:
-                    assouser = db_session.query(
-                        GitUser
-                    ).filter_by(id=get_user_id).first()
-                    assogroup = db_session.query(
-                        GitGroup
-                    ).filter_by(id=get_group_id).first()
-                    assouser.git_group.append(assogroup)
-                    db_session.add(assouser)
-                    db_session.commit()
-                except:
-                    db_session.rollback()
-                db_session.close()
-                return redirect(url_for('user'))
-        if request.files:
-            file = request.files.get('keyFile', '')
-            if file:
-                filename = secure_filename(file.filename)
-                filepath = os.path.join(KEY_DIR, filename)
-                if not allowed_file(filename, allowed_ext):
-                    upload_status['status'] = 1
-                    print >>f, filename + ' is not a pub key.'
-                    return render_template(
-                        'upload.html',
-                        upload_status=upload_status,
-                    )
-                if os.path.exists(filepath):
-                    upload_status['status'] = 2
-                    return render_template(
-                        'upload.html',
-                        upload_status=upload_status,
-                    )
-                try:
-                    new_user = GitUser(name=filename)
-                    db_session.add(new_user)
-                    db_session.commit()
-                    db_session.close()
-                    file.save(filepath)
-                    print >>f, filename + ' has been saved locally.'
-                    upload_status['status'] = 0
-                    return render_template(
-                        'upload.html',
-                        upload_status=upload_status,
-                    )
-                except:
-                    db_session.rollback()
-                    db_session.close()
-                    upload_status['status'] = 3
-                    return render_template(
-                        'upload.html',
-                        upload_status=upload_status,
-                    )
-            else:
-                upload_status['status'] = 4
+    if request.method == 'POST' and request.files:
+        file = request.files.get('keyFile', '')
+        if file:
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(KEY_DIR, filename)
+            if not allowed_file(filename, allowed_ext):
+                upload_status['status'] = 1
+                print >>f, filename + ' is not a pub key.'
                 return render_template(
                     'upload.html',
                     upload_status=upload_status,
                 )
+            if os.path.exists(filepath):
+                upload_status['status'] = 2
+                return render_template(
+                    'upload.html',
+                    upload_status=upload_status,
+                )
+            try:
+                new_user = GitUser(name=filename)
+                db_session.add(new_user)
+                db_session.commit()
+                file.save(filepath)
+                print >>f, filename + ' has been saved locally.'
+                upload_status['status'] = 0
+                return render_template(
+                    'upload.html',
+                    upload_status=upload_status,
+                )
+            except:
+                db_session.rollback()
+                upload_status['status'] = 3
+                return render_template(
+                    'upload.html',
+                    upload_status=upload_status,
+                )
+            finally:
+                db_session.close()
+        else:
+            upload_status['status'] = 4
+            return render_template(
+                'upload.html',
+                upload_status=upload_status,
+            )
     f.close()
-    
-    db_session.close() 
     return render_template(
         'user.html',
         status_dict=status_dict,
@@ -133,8 +112,52 @@ def uploaded_file(filename):
     return send_from_directory(KEY_DIR, filename)
 
 
-@app.route('/user/int:<user_id>/group')
-def assign_group(user_id):
-    return redirect(
-        url_for('user')
-    )
+@app.route('/user/group/add', methods=['POST'])
+def add_asso_group():
+    if request.method == 'POST':
+        request_key = request.form.keys()[0]
+        get_user_id = int(request_key.split('-')[1])
+        get_group_id = int(request.form.get(request_key, ''))
+        assos = db_session.query(asso_group_user).all()
+        
+        if (get_group_id, get_user_id) not in assos:
+            try:
+                assouser = db_session.query(
+                    GitUser
+                ).filter_by(id=get_user_id).first()
+                assogroup = db_session.query(
+                    GitGroup
+                ).filter_by(id=get_group_id).first()
+                assouser.git_group.append(assogroup)
+                db_session.add(assouser)
+                db_session.commit()
+            except:
+                db_session.rollback()
+            finally:
+                db_session.close()
+        else:
+            print "The record already exists."
+            return redirect(url_for('user'))
+
+
+@app.route('/user/group/remove', methods=['POST'])
+def remove_asso_group():
+    if request.method == 'POST':
+        request_key = request.form.keys()[0]
+        get_user_id = int(request_key.split('-')[1])
+        get_group_id = request.form.get(request_key, '')
+        try:
+            assouser = db_session.query(
+                GitUser
+            ).filter_by(id=get_user_id).first()
+            assogroup = db_session.query(
+                GitGroup
+            ).filter_by(id=get_group_id).first()
+            assouser.git_group.remove(assogroup)
+            db_session.add(assouser)
+            db_session.commit()
+        except:
+            db_session.rollback()
+        finally:
+            db_session.close()
+            return redirect(url_for('user'))

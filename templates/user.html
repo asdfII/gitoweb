@@ -61,19 +61,19 @@
           </td>
           <td>
             <div class="btn-group">
-              <form class="form-inline" method="POST" role="form">
-                <select class="btn btn-sm" name="addIntoGroupName-{{ user_id }}" id="addIntoGroupId-{{ user_id }}">
+              <form class="form-inline" id="assoGroupForm" method="POST" role="form">
+                <select class="btn btn-sm" name="assoGroupName-{{ user_id }}" id="assoGroupId-{{ user_id }}">
                   {% for group_id, group_name in groupdict.iteritems() %}
                   <option value="{{ group_id }}">{{ group_name }}</option>
                   {% endfor %}
                 </select>
-                <!-- <input type="button" class="btn btn-sm btn-primary" id="addIntoGroupId" value="add">
-                <input type="button" class="btn btn-sm btn-danger" id="removeFromGroupId" value="remove"> -->
                 <div style="color:#33CC33;" class="glyphicon glyphicon-plus" id="addIntoGroupId-{{ user_id }}"
-                  onclick="javascript:this.parentNode.submit()"></div>
+                onclick="javascript:this.parentNode.action='{{ url_for('add_asso_group') }}';this.parentNode.submit()">
+                </div>
                 <span>|</span>
                 <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromGroupId-{{ user_id }}"
-                  onclick="javascript:this.parentNode.submit()"></div>
+                onclick="javascript:this.parentNode.action='{{ url_for('remove_asso_group') }}';this.parentNode.submit()">
+                </div>
               </form>
             </div>
           </td>
@@ -124,8 +124,20 @@
 </div>
 <script type="text/javascript">
 //
-$('input[id=inputfile').change(function() {
+$('input[id=inputfile]').change(function() {
     $('#inputpath').val($(this).val());
+});
+
+$('#addIntoGroupId-{{ user_id }}').click(function() {
+    var assoGroupForm=$('#assoGroupForm');
+    assoGroupForm.attr('action', '{{ url_for("add_asso_group") }}');
+    assoGroupForm.submit();
+});
+
+$('#removeFromGroupId-{{ user_id }}').click(function() {
+    var assoGroupForm=$('#assoGroupForm');
+    assoGroupForm.attr('action', '{{ url_for("remove_asso_group") }}');
+    assoGroupForm.submit();
 });
 </script>
 {% endblock %}

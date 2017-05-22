@@ -42,7 +42,7 @@ def group():
                 new_group = GitGroup(name=new_group_name)
                 db_session.add(new_group)
                 db_session.commit()
-                group_add(new_group_name)
+                group_init(new_group_name)
             except:
                 db_session.rollback()
                 os.remove(os.path.join(filepath, new_group_name))
@@ -56,7 +56,7 @@ def group():
 
 
 @app.route('/group/<group_name>')
-def group_add(group_name):
+def group_init(group_name):
     f = open(BASE_DIR + '/conf/groups/' + group_name + '.conf', 'wb+')
     f.truncate()
     f.write('@' + group_name + ' = ')
