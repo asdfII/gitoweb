@@ -19,3 +19,8 @@ Updated on 2017/06/01
 Requirements:  
 Flask  
 SQLAlchemy  
+
+## Run
+1. DB settings in gitoweb/settings.py
+2. python init_db.py
+3. python manage.oy and try it

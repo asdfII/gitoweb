@@ -5,7 +5,7 @@ import os, sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # TYPE: mysql/postgresql/sqlite
-# if choosing sqlite, only need to fill in dbtype and dbname
+# if choosing sqlite, only need to fill in `TYPE` and `NAME`
 DATABASES = {
     'TYPE': 'sqlite',
     'NAME': 'gitolite',
