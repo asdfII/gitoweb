@@ -17,12 +17,16 @@
     <strong>The pub key already exists.</strong>
   </div>
 {% elif upload_status.status|int == 3 %}
+  <div class="alert alert-warning">
+    <strong>Please choose a pub key file.</strong>
+  </div>
+{% elif upload_status.status|int == 4 %}
   <div class="alert alert-danger">
     <strong>Error while writing into db.</strong>
   </div>
-{% elif upload_status.status|int == 4 %}
-  <div class="alert alert-warning">
-    <strong>Please choose a pub key file.</strong>
+{% elif upload_status.status|int == 5 %}
+  <div class="alert alert-danger">
+    <strong>Please check if `keydir` exists.</strong>
   </div>
 {% endif %}
   <button type="button" class="btn btn-default">

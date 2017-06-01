@@ -2,9 +2,9 @@
 {% block title %}Gitoweb{% endblock %}
 
 {% block bar %}
-  <li class="active"><a href="#">HomePage<span class="badge">12</span></a></li>
+  <li class="active"><a href="#">HomePage<span class="badge"></span></a></li>
   <li><a href="#">Info</a></li>
-  <li><a href="#">Message<span class="badge">3</span></a></li>
+  <li><a href="#">Message<span class="badge"></span></a></li>
 {% endblock %}
 
 {% block nav %}
@@ -24,7 +24,6 @@
 {% endblock %}
 
 {% block content %}
-
 <!-- <h1 class="page-header">Users</h1> -->
 <ul id="myTab" class="nav nav-tabs">
   <li class="active"><a href="#userList" data-toggle="tab"><strong>Users</strong></a></li>
@@ -37,7 +36,7 @@
         <tr>
           <th class="text-center">
             <!-- <input type="checkbox" id="selectAllUser" onclick="selectAllUser(this)"> -->
-            ID
+            No.
           </th>
           <th class="text-center">Key</th>
           <th class="text-center">Group</th>
@@ -50,23 +49,34 @@
         <tr>
           <td>
             <!-- <input type="checkbox" name="selectUserName"> -->
-            {{ counter }}
+            <div class="btn-group">{{ counter }}</div>
           </td>
-          <td>{{ user_name }}</td>
-          <td>
+          <td class="col-sm-4">
+            <div class="btn-group">
+              <form class="form-inline" id="removeKeyForm" method="POST" role="form">
+                <input class="disable-enter-submit" type="text" name="{{ user_name }}" value="{{ user_name }}"
+                style="text-align:center;border:0px;color=#000000" readonly>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="color:#606060;" class="glyphicon glyphicon-remove" id="removeKeyId-{{ user_name }}"
+                onclick="javascript:this.parentNode.action='{{ url_for('user_remove') }}';this.parentNode.submit()">
+                </div>
+              </form>
+            </div>
+          </td>
+          <td class="col-sm-4">
             <select class="btn btn-sm" name="userGroupName-{{ user_id }}" id="userGroupId-{{ user_id }}">
             {% for assignedgroup_name in assignedgroup[user_id] %}
               <option value="{{ assignedgroup_name }}">{{ assignedgroup_name }}</option>
             {% endfor %}
+            </select>
           </td>
-          <td>
+          <td class="col-sm-4">
             <div class="btn-group">
               <form class="form-inline" id="assoGroupForm" method="POST" role="form">
                 <select class="btn btn-sm" name="assoGroupName-{{ user_id }}" id="assoGroupId-{{ user_id }}">
-                  {% for group_id, group_name in groupdict.iteritems() %}
+                  {% for group_id, group_name in grouptouserdict.iteritems() %}
                   <option value="{{ group_id }}">{{ group_name }}</option>
                   {% endfor %}
-                </select>
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;
                 <div style="color:#33CC33;" class="glyphicon glyphicon-plus" id="addIntoGroupId-{{ user_id }}"
                 onclick="javascript:this.parentNode.action='{{ url_for('add_asso_group') }}';this.parentNode.submit()">
                 </div>
@@ -126,6 +136,14 @@
 //
 $('input[id=inputfile]').change(function() {
     $('#inputpath').val($(this).val());
+});
+
+$(document).ready(function() {
+    $('.disable-enter-submit').keydown(function(event) {
+        if (event.keyCode == 13) {
+            return false;
+         }
+    });
 });
 
 $('#addIntoGroupId-{{ user_id }}').click(function() {

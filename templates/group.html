@@ -2,9 +2,9 @@
 {% block title %}Gitoweb{% endblock %}
 
 {% block bar %}
-  <li class="active"><a href="#">HomePage<span class="badge">12</span></a></li>
+  <li class="active"><a href="#">HomePage<span class="badge"></span></a></li>
   <li><a href="#">Info</a></li>
-  <li><a href="#">Message<span class="badge">3</span></a></li>
+  <li><a href="#">Message<span class="badge"></span></a></li>
 {% endblock %}
 
 {% block nav %}
@@ -24,11 +24,10 @@
 {% endblock %}
 
 {% block content %}
-
 <!-- <h1 class="page-header">Groups</h1> -->
 <ul id="myTab" class="nav nav-tabs">
   <li class="active"><a href="#groupDict" data-toggle="tab"><strong>Groups</strong></a></li>
-  <li><a href="#groupManager" data-toggle="tab"><strong>Group Manager</strong></a></li>
+  <li><a href="#groupCreator" data-toggle="tab"><strong>Group Creator</strong></a></li>
 </ul>
 <div id="groupTabContent" class="tab-content">
   <div class="tab-pane fade in active" id="groupDict">
@@ -36,46 +35,32 @@
       <thead>
         <tr>
           <th class="text-center">
-            <!-- <input type="checkbox" id="selectAllUser" onclick="selectAllUser(this)"> -->
-            ID
+            <!-- <input type="checkbox" id="selectAllGroup" onclick="selectAllGroup(this)"> -->
+            No.
           </th>
           <th class="text-center">Group</th>
-          <th class="text-center">Action</th>
         </tr>
       </thead>
-    <script type="text/javascript">
-    var grouplist = {{ groupdict|safe }};
-    for (var i in grouplist) {
-        console.log(grouplist[i]);
-    }
-    </script>
       <tbody>
-      {% for i in groupdict %}
+      {% for group_name in groupdict %}
         {% set counter = loop.index %}
         <tr class="text-center">
           <td>
-            <!-- <input type="checkbox" name="selectUserName"> -->
-            {{ counter }}
+            <!-- <input type="checkbox" name="selectGroupName"> -->
+            <div class="btn-group">{{ counter }}</div>
           </td>
-          <td>{{ i }}</td>
-<!--           <td>
-            <div class="btn-group">
-              <button type="button" class="btn btn-xs btn-danger" id="deleteGroup" onclick="deleteAllGroup()">Delete</button>
-            </div>
-          </td> -->
           <td>
             <div class="btn-group">
-              <div style="color:#FF9933;" class="glyphicon glyphicon-pencil" id="renameGroupId"
-              onclick="javascript:this.parentNode.action='{# url_for('rename_asso_repo') #}';this.parentNode.submit()">
-              </div>
-              <span>|</span>
-              <div style="color:#33CC33;" class="glyphicon glyphicon-plus" id="addIntoRepoId"
-              onclick="javascript:this.parentNode.action='{# url_for('remove_asso_repo') #}';this.parentNode.submit()"> 
-              </div>
-              <span>|</span>
-              <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromRepoId"
-              onclick="javascript:this.parentNode.action='{# url_for('remove_asso_repo') #}';this.parentNode.submit()"> 
-              </div>
+              <form class="form-inline" id="renameGroupForm" method="POST" role="form">
+                <input class="disable-enter-submit" type="text" name="{{ group_name }}" value="{{ group_name }}"
+                style="text-align:center;border:0px">&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="color:#FF9933;" class="glyphicon glyphicon-pencil" id="renameGroupId-{{ group_name }}"
+                onclick="javascript:this.parentNode.action='{{ url_for('group_rename') }}';this.parentNode.submit()">
+                </div>
+                <div style="color:#606060;" class="glyphicon glyphicon-remove" id="removeGroupId-{{ group_name }}"
+                onclick="javascript:this.parentNode.action='{{ url_for('group_remove') }}';this.parentNode.submit()">
+                </div>
+              </form>
             </div>
           </td>
         </tr>
@@ -83,7 +68,7 @@
       </tbody>
     </table>
   </div>
-  <div class="tab-pane fade" id="groupManager">
+  <div class="tab-pane fade" id="groupCreator">
     <table class="table table-condensed">
       <thead>
         <tr>
@@ -96,11 +81,10 @@
             <form class="form-inline" method="POST" role="form">
               <div class="form-group">
                 <label class="sr-only" for="addGroupId">Name</label>
-                <input type="text" class="form-control" name="addGroupName" id="addGroupId" placeholder="Add new group here.">
+                <input type="text" class="form-control" name="addGroupName" id="addGroupId" placeholder="Create new group">
               </div>
               <div class="form-group">
                 <button type="submit" class="btn btn-default">Create</button>
-                <!--<input type="submit" value="Add">-->
               </div>
             </form>
           </td>
@@ -117,6 +101,14 @@ $(function() {
         var previousTab = $(e.relatedTarget).text();
         $('.active-tab span').html(activeTab);
         $('.previous-tab span').html(previousTab);
+    });
+});
+
+$(document).ready(function() {
+    $('.disable-enter-submit').keydown(function(event) {
+        if (event.keyCode == 13) {
+            return false;
+         }
     });
 });
 </script>

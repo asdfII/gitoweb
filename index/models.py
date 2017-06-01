@@ -27,6 +27,7 @@ class GitRepo(Base):
     __tablename__ = 'git_repo'
     id = Column(Integer, primary_key=True)
     name = Column(String(20))
+    sub_repo = relationship("GitSubRepo", backref="git_repo")
     
     def __init__(self, id=None, name=None):
         self.id = id
@@ -34,6 +35,21 @@ class GitRepo(Base):
     
     def __repr__(self):
         return '<GitRepo %s>' % (self.name)
+
+
+class GitSubRepo(Base):
+    __tablename__ = 'git_sub_repo'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(20))
+    main_repo_id = Column(Integer, ForeignKey('git_repo.id'))
+    
+    def __init__(self, id=None, name=None, main_repo_id=None):
+        self.id = id
+        self.name = name
+        self.main_repo_id = main_repo_id
+    
+    def __repr__(self):
+        return '<GitSubRepo %s>' % (self.name)
 
 
 class GitGroup(Base):

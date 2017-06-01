@@ -14,11 +14,11 @@ if __name__ == '__main__':
     from repo.views import *
     from group.views import *
     from user.views import *
-    from ceshi.views import *
     try:
         app.run(
             '0.0.0.0',
             5000,
+            threaded=True,
             debug=True,
         )
     except socket.error:

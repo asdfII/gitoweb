@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 
+import os
+import time
+import subprocess
+try:
+    import simplejson as json
+except:
+    import json
+
 from flask import (
     request, session, g,
     redirect, url_for, abort,
@@ -11,34 +19,60 @@ from index.models import GitUser, GitGroup, GitRepo
 from db.database import db_session
 
 
-@app.route('/', methods=['Get'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    try:
-        #~ new_user = GitUser(name='alphaz')
-        #~ db_session.add(new_user)
-        db_session.commit()
-    except:
-        db_session.rollback()
-    
-    #~ ssh = paramiko.SSHClient()
-    #~ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    #~ ssh.connect(host, port, user, passwd, timeout=3)
-    #~ stdin, stdout, stderr = ssh.exec_command('file' + ' ' + filename)
-    #~ ssh.close()
-    
-    return render_template('index.html')
+    proc = subprocess.Popen(['git', 'status'],
+        stdout=subprocess.PIPE,
+        shell=True,
+    )
+    (results, errors) = proc.communicate()
+    return render_template(
+        'index.html',
+        results = results,
+    )
 
 
-#~ @app.route('/index')
-#~ def index_self():
-    #~ response = make_response(redirect(url_for('index')))
-    #~ return response
-    #~ return render_template('index.html')
-
-
-@app.route('/show')
-def show():
-    return redirect(url_for('group'))
+@app.route('/git/status', methods=['POST'])
+def git_status():
+    if request.method == 'POST':
+        key = request.form
+        if key.has_key('gitStatus'):
+            proc1 = subprocess.Popen(['git', 'status'],
+                stdout=subprocess.PIPE,
+                shell=True,
+            )
+            (results1, errors1) = proc1.communicate()
+        elif key.has_key('gitConfirm') and key.has_key('gitComment'):
+            comments = key.get('gitComment')
+            if comments == '':
+                comments = 'Default Web Commit at ' + time.strftime(
+                    "%Y%m%d%H%M%S", time.localtime()
+                )
+            #~ os.system("git add .")
+            #~ os.system("git add -A")
+            #~ os.system("git commit -m " + comments)
+            #~ os.system("git push origin dev")
+            proc0 = subprocess.Popen(['git', 'add', '.'],
+                stdout=subprocess.PIPE,
+                shell=True,
+            )
+            proc1 = subprocess.Popen(['git', 'add', '-A'],
+                stdout=subprocess.PIPE,
+                shell=True,
+            )
+            proc2 = subprocess.Popen(['git', 'commit', '-m', comments],
+                stdout=subprocess.PIPE,
+                shell=True,
+            )
+            proc3 = subprocess.Popen(['git', 'push'],
+                stdout=subprocess.PIPE,
+                shell=True,
+            )
+            (results0, errors0) = proc0.communicate()
+            (results1, errors1) = proc1.communicate()
+            (results2, errors2) = proc2.communicate()
+            (results3, errors3) = proc3.communicate()
+    return redirect(url_for('index'))
 
 
 @app.route('/error')

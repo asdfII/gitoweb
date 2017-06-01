@@ -2,9 +2,9 @@
 {% block title %}Gitoweb{% endblock %}
 
 {% block bar %}
-  <li class="active"><a href="#">HomePage<span class="badge">12</span></a></li>
+  <li class="active"><a href="#">HomePage<span class="badge"></span></a></li>
   <li><a href="#">Info</a></li>
-  <li><a href="#">Message<span class="badge">3</span></a></li>
+  <li><a href="#">Message<span class="badge"></span></a></li>
 {% endblock %}
 
 {% block nav %}
@@ -24,11 +24,11 @@
 {% endblock %}
 
 {% block content %}
-
 <!-- <h1 class="page-header">Repos</h1> -->
 <ul id="myTab" class="nav nav-tabs">
   <li class="active"><a href="#repoDict" data-toggle="tab"><strong>Repos</strong></a></li>
-  <li><a href="#repoManager" data-toggle="tab"><strong>Repo Manager</strong></a></li>
+  <li><a href="#repoSub" data-toggle="tab"><strong>Sub Repos</strong></a></li>
+  <li><a href="#repoCreator" data-toggle="tab"><strong>Repo Creator</strong></a></li>
 </ul>
 <div id="repoTabContent" class="tab-content">
   <div class="tab-pane fade in active" id="repoDict">
@@ -36,11 +36,211 @@
       <thead>
         <tr>
           <th class="text-center">
-            <!-- <input type="checkbox" id="selectAllUser" onclick="selectAllUser(this)"> -->
-            ID
+            <!-- <input type="checkbox" id="selectAllRepo" onclick="selectAllRepo(this)"> -->
+            No.
           </th>
           <th class="text-center">Repo</th>
+          <th class="text-center">Sub Repo</th>
           <th class="text-center">Action</th>
         </tr>
       </thead>
+      <tbody>
+      {% for repo_name, subrepo_name  in repodict.iteritems() %}
+        {% set counter = loop.index %}
+        <tr class="text-center">
+          <td>
+            <!-- <input type="checkbox" name="selectRepoName"> -->
+            <div class="btn-group">{{ counter }}</div>
+          </td>
+          <td>
+            <div class="btn-group">
+              <form class="form-inline" id="renameRepoForm" method="POST" role="form">
+                <input class="disable-enter-submit" type="text" name="{{ repo_name }}" value="{{ repo_name }}"
+                style="text-align:center;border:0px">&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="color:#FF9933;" class="glyphicon glyphicon-pencil" id="renameRepoId-{{ repo_name }}"
+                onclick="javascript:this.parentNode.action='{{ url_for('repo_rename') }}';this.parentNode.submit()">
+                </div>
+                <div style="color:#606060;" class="glyphicon glyphicon-remove" id="removeRepoId-{{ repo_name }}"
+                onclick="javascript:this.parentNode.action='{{ url_for('repo_remove') }}';this.parentNode.submit()">
+                </div>
+              </form>
+            </div>
+          </td>
+          <td class="col-sm-4">
+            <div>
+              <form class="form-inline" id="assoRepoListForm" method="POST" role="form">
+                <select class="btn btn-sm" name="assoRepoListName-{{ repo_name }}" id="assoRepoListId-{{ repo_name }}">
+                {% for assignedgroup_name in assignedgroup[repo_name] %}
+                  <option value="{{ assignedgroup_name }}">{{ assignedgroup_name|replace('~', '/') }}</option>
+                {% endfor %}
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromRepoId-{{ repo_id }}"
+                onclick="javascript:this.parentNode.action='{{ url_for('remove_asso_subrepo') }}';this.parentNode.submit()"> 
+                </div>
+              </form>
+            </div>
+          </td>
+          <td class="col-sm-4">
+            <div class="btn-group">
+              <form class="form-inline" id="assoRepoSelectForm" method="POST" role="form">
+                <select class="btn btn-sm" name="assoRepoSelectName-{{ repo_name }}" id="assoRepoSelectId-{{ repo_name }}">
+                {% for subrepo_id, subrepo_name in subrepotorepodict.iteritems() %}
+                  <option value="{{ subrepo_name }}">{{ subrepo_name|replace('~', '/') }}</option>
+                {% endfor %}
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="color:#33CC33;" class="glyphicon glyphicon-plus" id="addIntoRepoId-{{ repo_id }}"
+                onclick="javascript:this.parentNode.action='{{ url_for('add_asso_subrepo') }}';this.parentNode.submit()"> 
+                </div>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="tab-pane fade" id="repoSub">
+    <table class="table table-condensed table-hover text-center">
+      <thead>
+        <tr class="text-center">
+          <th class="col-sm-2">
+          <div class="btn-group">
+            <form class="form-inline" id="selectSubRepoForm" method="POST" role="form">
+              <input type='hidden' name="testname" value="testvalue">
+              <select class="btn btn-group" name="subRepoName" id="subRepoId" onchange="if(this.value != '{{ select_subrepo }}') { this.form.submit(); }">
+              {% if select_subrepo %}
+                <option value="{{ select_subrepo }}">{{ select_subrepo }}</option>
+                <option disabled="disabled">------------------------</option>
+              {% else %}
+                <option selected="selected" disabled="disabled">------------------------</option>
+              {% endif %}
+              {% for sub_repo_name, sub_repo_item in subrepodict.iteritems() %}
+                <option value="{{ sub_repo_name }}">{{ sub_repo_name }}</option>
+              {% endfor %}
+              </select>&nbsp;&nbsp;
+              <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromSubRepoId-{{ select_subrepo }}"
+              onclick="javascript:this.parentNode.action='{{ url_for('sub_repo_remove') }}';this.parentNode.submit()">
+              </div>
+            </form>
+          </div>
+          </th>
+          <th class="text-center">
+            Sub Item
+          </th>
+          <th class="text-center">Group</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for sub_item_key, sub_item_value in subitemdict.iteritems() %}
+        {% set counter = loop.index %}
+        <tr class="text-center">
+          <td>{{ counter }}</td>
+          <td>
+            <div class="btn-group">{{ sub_item_key }}</div>
+          </td>
+          <td>{{ sub_item_value }}
+{#<!--            <div class="btn-group">
+             <select class="btn btn-sm" name="subItemGroupName-{{ sub_item_key }}" id="subItemGroupId-{{ sub_item_key }}">
+            {% set grouplist = sub_item_value.split('@') %}
+            {% for group in grouplist %}
+              <option value="{{ group }}">{{ group }}</option>
+            {% endfor %}
+            </select> -->#}
+            </div>
+          </td>
+          <td class="col-sm-4">
+            <div class="btn-group">
+              <form class="form-inline" id="assoSubRepoGroupForm" method="POST" role="form">
+                <select class="btn btn-sm" name="assoSubRepoGroupName:{{ select_subrepo }}:{{ sub_item_key }}"
+                id="assoSubRepoGroupId:{{ sub_repo_name }}:{{ sub_item_key }}">
+                  {% for group_id, group_name in grouptosubrepodict.iteritems() %}
+                  <option value="{{ group_name }}">{{ group_name }}</option>
+                  {% endfor %}
+                </select>&nbsp;&nbsp;&nbsp;&nbsp;
+                <div style="color:#33CC33;" class="glyphicon glyphicon-plus" id="addIntoRepoId-{{ sub_item_key }}"
+                onclick="javascript:this.parentNode.action='{{ url_for('add_asso_subrepo_group') }}';this.parentNode.submit()"> 
+                </div>
+                <span>|</span>
+                <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromSubRepoId-{{ sub_item_key }}"
+                onclick="javascript:this.parentNode.action='{{ url_for('remove_asso_subrepo_group') }}';this.parentNode.submit()"> 
+                </div>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="tab-pane fade" id="repoCreator">
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>A main repo such as <font color="red">bigdata_repo</font>, <font color="red">machine_learning_repo</font>.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <form class="form-inline" method="POST" role="form">
+              <div class="form-group">
+                <label class="sr-only" for="addMainRepoId">mainRepoName</label>
+                <input type="text" class="form-control" name="addMainRepoName" id="addMainRepoId" placeholder="Create new main repo">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-default">Create MainRepo</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>For Sub Repo, maybe you'll like <font color="red">parent_dir</font>/<font color="green">child_dir</font></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <form class="form-inline" method="POST" role="form">
+              <div class="form-group">
+                <label class="sr-only" for="addSubRepoId">subRepoName</label>
+                <input type="text" class="form-control" name="addSubRepoName" id="addSubRepoId" placeholder="Create new sub repo">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-default">Create SubRepo</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+//
+$(function() {
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        var activeTab = $(e.target).text();
+        var previousTab = $(e.relatedTarget).text();
+        $('.active-tab span').html(activeTab);
+        $('.previous-tab span').html(previousTab);
+    });
+});
+
+$(document).ready(function() {
+    $('.disable-enter-submit').keydown(function(event) {
+        if (event.keyCode == 13) {
+            return false;
+         }
+    });
+});
+
+$(function () {
+    $('#myTab li:eq({{ tab_page }}) a').tab('show');
+});
+</script>
 {% endblock %}

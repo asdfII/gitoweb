@@ -32,7 +32,7 @@ def ceshi():
     )
 
 
-@app.route('/ceshi-a', methods=['GET', 'POST'])
+@app.route('/ceshi-ajax', methods=['GET', 'POST'])
 def ceshi_ajax():
     if request.method == 'POST':
         username = request.form.get('username', '')
@@ -47,4 +47,4 @@ def ceshi_ajax():
         if error is not None:
             return jsonify({'r': 1, 'error': error})
         return jsonify({'r': 0, 'rs': 'ok'})
-    return render_template('ceshi-a.html')
+    return render_template('ceshi-ajax.html')

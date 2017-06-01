@@ -40,7 +40,31 @@ function selectAllGroup(src) {
     }
 }
 
+function selectAllRepo(src) {
+    var checkboxes = document.getElementsByTagName('input');
+    if (src.checked) {
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].name == 'selectRepoName') {
+                checkboxes[i].checked = true;
+            }
+        }
+    } else {
+        for (var i = 0; i < checkboxes.length; i++) {
+            console.log(i)
+            if (checkboxes[i].name == 'selectRepoName') {
+                checkboxes[i].checked = false;
+            }
+        }
+    }
+}
+
+
 function deleteAllGroup() {
-    var items = document.getElementById('selectAll');
+    var items = document.getElementById('selectAllGroup');
+    items.remove()
+}
+
+function deleteAllRepo() {
+    var items = document.getElementById('selectAllRepo');
     items.remove()
 }

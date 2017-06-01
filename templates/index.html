@@ -2,9 +2,9 @@
 {% block title %}Gitoweb{% endblock %}
 
 {% block bar %}
-  <li class="active"><a href="#">HomePage<span class="badge">12</span></a></li>
+  <li class="active"><a href="#">HomePage<span class="badge"></span></a></li>
   <li><a href="#">Info</a></li>
-  <li><a href="#">Message<span class="badge">3</span></a></li>
+  <li><a href="#">Message<span class="badge"></span></a></li>
 {% endblock %}
 
 {% block nav %}
@@ -24,4 +24,29 @@
 {% endblock %}
 
 {% block content %}
+
+<!-- <h3 class="page-header">Git Status</h3> -->
+<ul id="myTab" class="nav nav-tabs">
+  <li class="active"><a href="#gitStatus" data-toggle="tab"><strong>Git Status</strong></a></li>
+</ul>
+<div id="repoTabContent" class="tab-content">
+  <div class="tab-pane fade in active" id="gitStatus"><br>
+    <table class="table-hover text-center">
+      <form class="form-inline" id="gitStatusForm" action="{{ url_for('git_status') }}" method="POST" role="form">
+        <div class="col-lg-offset-0">
+          <div class="input-group">
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-info" name="gitStatus" value="gitStatus">GetStatus</button>
+              <button class="btn btn-sm btn-danger" name="gitConfirm" value="gitConfirm">Confirm</button>
+            </span>
+            <input type="text" style="border-style: solid;border-color: #C0C0C0;" class="form-control input-sm" name="gitComment" id="gitComment" placeholder="Git Commit Here">
+          </div>
+        </div>
+      </form>
+    </table>
+  </div>
+</div>
+<pre style="background:#FFFFFF">
+{{ results }}
+</pre>
 {% endblock %}
