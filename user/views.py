@@ -158,7 +158,7 @@ def user_remove():
         
         gconf_dict = {}
         for i in deleteuser_assogroup:
-            with open(i, 'r') as f:
+            with open(i, 'rb') as f:
                 lines = f.readlines()
                 for line in lines:
                     gconf_group = line.split('=')[0].lstrip('@').strip()
@@ -172,7 +172,7 @@ def user_remove():
                 gconf_dict[each_group].remove(assouser_name)
                 assogroup_file = BASE_DIR + '/conf/groups/' + each_group \
                     + '.conf'
-                f = open(assogroup_file, 'w')
+                f = open(assogroup_file, 'wb')
                 f.truncate()
                 f.write('@' + each_group + ' = ' + ' '.join(gconf_dict[each_group]))
                 f.close()
@@ -208,7 +208,7 @@ def add_asso_group():
                     assogroup_file = BASE_DIR + '/conf/groups/' \
                         + assogroup.name + '.conf'
                     gconf_dict = {}
-                    with open(assogroup_file, 'r') as f:
+                    with open(assogroup_file, 'rb') as f:
                         lines = f.readlines()
                         for line in lines:
                             gconf_group = line.split('=')[0].lstrip('@').strip()
@@ -224,7 +224,7 @@ def add_asso_group():
                             assogroup.name
                         ) and _ not in gconf_dict[assogroup.name]:
                             gconf_dict[assogroup.name].append(str(_))
-                            f = open(assogroup_file, 'w')
+                            f = open(assogroup_file, 'wb')
                             f.truncate()
                             for _ in gconf_dict:
                                 f.write('@' + _ + ' = ' + ' '.join(gconf_dict[_]))
@@ -262,7 +262,7 @@ def remove_asso_group():
             assogroup_file = BASE_DIR + '/conf/groups/' \
                 + assogroup.name + '.conf'
             gconf_dict = {}
-            with open(assogroup_file, 'r') as f:
+            with open(assogroup_file, 'rb') as f:
                 lines = f.readlines()
                 for line in lines:
                     gconf_group = line.split('=')[0].lstrip('@').strip()
@@ -278,7 +278,7 @@ def remove_asso_group():
                     assogroup.name
                 ) and _ in gconf_dict[assogroup.name]:
                     gconf_dict[assogroup.name].remove(str(_))
-                    f = open(assogroup_file, 'w')
+                    f = open(assogroup_file, 'wb')
                     f.truncate()
                     for _ in gconf_dict:
                         f.write('@' + _ + ' = ' + ' '.join(gconf_dict[_]))

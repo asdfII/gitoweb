@@ -50,7 +50,8 @@ def group():
         ).filter_by(name=new_group_name)
         if not db_session.query(
             query_group.exists()
-        ).scalar() and new_group_name.strip() != '':
+        ).scalar() and new_group_name.strip() != '' and \
+        new_group_name.strip() != 'all':
             try:
                 new_group = GitGroup(name=new_group_name)
                 db_session.add(new_group)
@@ -110,8 +111,8 @@ def group_rename():
             + old_groupname + '.conf'
         new_name_file = BASE_DIR + '/conf/groups/' \
             + new_groupname + '.conf'
-        if new_groupname.strip(
-        ) != '' and new_groupname != old_groupname:
+        if new_groupname.strip() != 'all' and new_groupname.strip(
+        ) != '' and new_groupname.strip() != old_groupname:
             renamegroup = db_session.query(
                 GitGroup
             ).filter_by(name=old_groupname).first()
@@ -120,16 +121,20 @@ def group_rename():
             db_session.close()
             #~ groupdict.pop(old_groupname)
             new_lines = []
-            with open(old_name_file, 'r') as f:
+            with open(old_name_file, 'rb') as f:
                 while True:
                     lines = f.readlines(8192)        
                     if not lines:
                         break
                     for line in lines:
                         line = line.rstrip('\n')
-                        line = re.sub('@'+old_groupname, '@'+new_groupname, line)
+                        line = re.sub(
+                            '@'+old_groupname,
+                            '@'+new_groupname,
+                            line
+                        )
                         new_lines.append(line)
-            with open(old_name_file, 'w') as f:
+            with open(old_name_file, 'wb') as f:
                 f.truncate()
                 for _ in new_lines:
                     print >>f, _

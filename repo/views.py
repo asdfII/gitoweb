@@ -205,7 +205,7 @@ def sub_repo_init(sub_repo_name):
     f.write('\n')
     f.write('RWC release-v[0-9\.]+   = ')
     f.write('\n')
-    f.write('RW                      = alphaz')
+    f.write('RW                      = ')
     f.write('\n')
     f.write('RWC dbg_[\w]+_[\w]+     = ')
     f.close()
@@ -241,7 +241,7 @@ def sub_repo_remove():
             remove_sub_repo_name = request.form.get('subRepoName', '')
         except IndexError:
             remove_sub_repo_name = ''
-        if '/' in remove_sub_repo_name:
+        if remove_sub_repo_name and '/' in remove_sub_repo_name:
             remove_sub_repo_name = '~'.join(
                 remove_sub_repo_name.split('/')
             )
@@ -281,7 +281,7 @@ def repo_rename():
             db_session.close()
             #~ repodict.pop(old_reponame)
             new_lines = []
-            with open(old_name_file, 'r') as f:
+            with open(old_name_file, 'rb') as f:
                 while True:
                     lines = f.readlines(8192)
                     if not lines:
@@ -292,7 +292,7 @@ def repo_rename():
                             '@'+new_reponame, line
                         )
                         new_lines.append(line)
-            with open(old_name_file, 'w') as f:
+            with open(old_name_file, 'wb') as f:
                 f.truncate()
                 for _ in new_lines:
                     print >>f, _
@@ -332,7 +332,7 @@ def sub_repo_rename():
             old_subreponame = '/'.join(old_subreponame.split('~'))
         if '~' in new_subreponame:
             new_subreponame = '/'.join(new_subreponame.split('~'))
-            with open(old_name_file, 'r') as f:
+            with open(old_name_file, 'rb') as f:
                 while True:
                     lines = f.readlines(8192)
                     if not lines:
@@ -343,7 +343,7 @@ def sub_repo_rename():
                             '@'+new_subreponame, line
                         )
                         new_lines.append(line)
-            with open(old_name_file, 'w') as f:
+            with open(old_name_file, 'wb') as f:
                 f.truncate()
                 for _ in new_lines:
                     print >>f, _
@@ -372,7 +372,7 @@ def add_asso_subrepo():
                     assorepo_file = BASE_DIR + '/conf/repos/' \
                         + assorepo.name + '.conf'
                     rconf_dict = {}
-                    with open(assorepo_file, 'r') as f:
+                    with open(assorepo_file, 'rb') as f:
                         lines = f.readlines()
                         for line in lines:
                             rconf_repo = line.split('=')[0].lstrip('@').strip()
@@ -385,7 +385,7 @@ def add_asso_subrepo():
                         rconf_dict[assorepo.name].append(
                             str(re.sub('~', '/', get_subrepo_name))
                         )
-                        f = open(assorepo_file, 'w')
+                        f = open(assorepo_file, 'wb')
                         f.truncate()
                         for _ in rconf_dict:
                             f.write('@' + _ + ' = ' + ' '.join(rconf_dict[_]))
@@ -422,7 +422,7 @@ def remove_asso_subrepo():
             assorepo_file = BASE_DIR + '/conf/repos/' \
                 + assorepo.name + '.conf'
             rconf_dict = {}
-            with open(assorepo_file, 'r') as f:
+            with open(assorepo_file, 'rb') as f:
                 lines = f.readlines()
                 for line in lines:
                     rconf_repo = line.split('=')[0].lstrip('@').strip()
@@ -437,7 +437,7 @@ def remove_asso_subrepo():
                 rconf_dict[assorepo.name].remove(
                     str(re.sub('~', '/', get_subrepo_name))
                 )
-                f = open(assorepo_file, 'w')
+                f = open(assorepo_file, 'wb')
                 f.truncate()
                 for _ in rconf_dict:
                     f.write('@' + _ + ' = ' + ' '.join(rconf_dict[_]))
@@ -487,7 +487,7 @@ def add_asso_subrepo_group():
                 iconf_dict[get_item_name].append(
                     str(get_group_name)
                 )
-                f = open(assosubrepo_file, 'w')
+                f = open(assosubrepo_file, 'wb')
                 f.truncate()
                 f.write('repo ' + subrepo_name + '\n')
                 for _ in iconf_dict:
@@ -538,7 +538,7 @@ def remove_asso_subrepo_group():
                 iconf_dict[get_item_name].remove(
                     str(get_group_name)
                 )
-                f = open(assosubrepo_file, 'w')
+                f = open(assosubrepo_file, 'wb')
                 f.truncate()
                 f.write('repo ' + subrepo_name + '\n')
                 for _ in iconf_dict:

@@ -8,23 +8,30 @@ except:
 
 from flask import (
     request,
-    render_template, redirect, url_for,
+    render_template, redirect, url_for, abort,
     jsonify,
 )
 from manage import app, BASE_DIR
-from utils.widgets import item_traversal, allowed_file
+from utils.widgets import (
+    item_traversal, allowed_file,
+    Pagination,
+)
 from index.models import GitUser, GitGroup, GitRepo
 from db.database import db_session
 
 
-@app.route('/ceshi')
-def ceshi():
+@app.route('/ceshi/', defaults={'page':1})
+@app.route('/ceshi/page/<int:page>')
+def ceshi(page):
+    #~ abort(404)
     ceshidict = {
         'alphaz': ['admin', 'superuser'],
         'user01': ['superuser'],
-        'user02': []
+        'user02': [],
     }
-    ceshistring = json.dumps(ceshidict),
+    ceshistring = json.dumps(ceshidict)
+    #~ pagination = Pagination(page, PER_PAGE, count)
+    pagination = Pagination(page, 1, 3)
     return render_template(
         'ceshi.html',
         ceshidict=ceshidict,

@@ -103,26 +103,26 @@
     <table class="table table-condensed table-hover text-center">
       <thead>
         <tr class="text-center">
-          <th class="col-sm-2">
-          <div class="btn-group">
-            <form class="form-inline" id="selectSubRepoForm" method="POST" role="form">
-              <input type='hidden' name="testname" value="testvalue">
-              <select class="btn btn-group" name="subRepoName" id="subRepoId" onchange="if(this.value != '{{ select_subrepo }}') { this.form.submit(); }">
-              {% if select_subrepo %}
-                <option value="{{ select_subrepo }}">{{ select_subrepo }}</option>
-                <option disabled="disabled">------------------------</option>
-              {% else %}
-                <option selected="selected" disabled="disabled">------------------------</option>
-              {% endif %}
-              {% for sub_repo_name, sub_repo_item in subrepodict.iteritems() %}
-                <option value="{{ sub_repo_name }}">{{ sub_repo_name }}</option>
-              {% endfor %}
-              </select>&nbsp;&nbsp;
-              <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromSubRepoId-{{ select_subrepo }}"
-              onclick="javascript:this.parentNode.action='{{ url_for('sub_repo_remove') }}';this.parentNode.submit()">
-              </div>
-            </form>
-          </div>
+          <th>
+            <div class="btn-group">
+              <form class="form-inline" id="selectSubRepoForm" method="POST" role="form">
+                <input type='hidden' name="testname" value="testvalue">
+                <select class="btn btn-group" name="subRepoName" id="subRepoId" onchange="if(this.value != '{{ select_subrepo }}') { this.form.submit(); }">
+                {% if select_subrepo %}
+                  <option value="{{ select_subrepo }}">{{ select_subrepo }}</option>
+                  <option disabled="disabled">------------------------</option>
+                {% else %}
+                  <option selected="selected" disabled="disabled">------------------------</option>
+                {% endif %}
+                {% for sub_repo_name, sub_repo_item in subrepodict.iteritems() %}
+                  <option value="{{ sub_repo_name }}">{{ sub_repo_name }}</option>
+                {% endfor %}
+                </select>&nbsp;&nbsp;
+<!--                 <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromSubRepoId-{{ select_subrepo }}"
+                onclick="javascript:this.parentNode.action='{{ url_for('sub_repo_remove') }}';this.parentNode.submit()">
+                </div> -->
+              </form>
+            </div>
           </th>
           <th class="text-center">
             Sub Item
