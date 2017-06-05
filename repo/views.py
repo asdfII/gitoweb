@@ -100,7 +100,8 @@ def repo():
     grouptosubrepodict[0] = u'all'
     
     if request.method == 'GET':
-        if 'subRepoName' in request.args.keys() and 'tab_page' in request.args.keys():
+        if 'subRepoName' in request.args.keys() and \
+            'tab_page' in request.args.keys():
             select_subrepo = str(request.args.get('subRepoName', ''))
             subitemdict = subrepodict[select_subrepo]
     
@@ -108,29 +109,31 @@ def repo():
         if 'addMainRepoName' in request.form.keys():
             get_repo_name = request.form.get('addMainRepoName', '')
             new_repo_name = ''
-            if get_repo_name[0] == '%' and get_repo_name[-1] == '%':
-                new_repo_name = get_repo_name.strip('%')
-            elif not (
-                get_repo_name[0] == '%' and get_repo_name[-1] == '%'
-            ):
-                if not get_repo_name.endswith('_repo'):
-                    get_repo_name = get_repo_name + '_repo'
-                new_repo_name = get_repo_name
-            query_repo = db_session.query(
-                GitRepo
-            ).filter_by(name=new_repo_name)
-            if not db_session.query(
-                query_repo.exists()
-            ).scalar() and new_repo_name.strip() != '':
-                try:
-                    new_repo = GitRepo(name=new_repo_name)
-                    db_session.add(new_repo)
-                    db_session.commit()
-                    repo_init(new_repo_name)
-                except:
-                    db_session.rollback()
-                finally:
-                    db_session.close()
+            
+            if get_repo_name.strip() != '':
+                if get_repo_name[0] == '%' and get_repo_name[-1] == '%':
+                    new_repo_name = get_repo_name.strip('%')
+                elif not (
+                    get_repo_name[0] == '%' and get_repo_name[-1] == '%'
+                ):
+                    if not get_repo_name.endswith('_repo'):
+                        get_repo_name = get_repo_name + '_repo'
+                    new_repo_name = get_repo_name
+                query_repo = db_session.query(
+                    GitRepo
+                ).filter_by(name=new_repo_name)
+                if not db_session.query(
+                    query_repo.exists()
+                ).scalar() and new_repo_name.strip() != '':
+                    try:
+                        new_repo = GitRepo(name=new_repo_name)
+                        db_session.add(new_repo)
+                        db_session.commit()
+                        repo_init(new_repo_name)
+                    except:
+                        db_session.rollback()
+                    finally:
+                        db_session.close()
             return redirect(url_for('repo'))
         elif 'addSubRepoName' in request.form.keys():
             new_sub_repo_name = request.form.get('addSubRepoName', '')

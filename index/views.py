@@ -53,29 +53,25 @@ def git_status():
                 comments = 'Default Web Commit at ' + time.strftime(
                     "%Y%m%d%H%M%S", time.localtime()
                 )
-            #~ os.system("git add .")
-            #~ os.system("git add -A")
-            #~ os.system("git commit -m " + comments)
-            #~ os.system("git push origin dev")
             proc0 = subprocess.Popen(['git', 'add', '.'],
                 stdout=subprocess.PIPE,
                 shell=proc_shell,
             )
+            (results0, errors0) = proc0.communicate()
             proc1 = subprocess.Popen(['git', 'add', '-A'],
                 stdout=subprocess.PIPE,
                 shell=proc_shell,
             )
+            (results1, errors1) = proc1.communicate()
             proc2 = subprocess.Popen(['git', 'commit', '-m', comments],
                 stdout=subprocess.PIPE,
                 shell=proc_shell,
             )
+            (results2, errors2) = proc2.communicate()
             proc3 = subprocess.Popen(['git', 'push'],
                 stdout=subprocess.PIPE,
                 shell=proc_shell,
             )
-            (results0, errors0) = proc0.communicate()
-            (results1, errors1) = proc1.communicate()
-            (results2, errors2) = proc2.communicate()
             (results3, errors3) = proc3.communicate()
     return redirect(url_for('index'))
 
