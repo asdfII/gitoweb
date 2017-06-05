@@ -7,6 +7,11 @@ try:
     import simplejson as json
 except:
     import json
+import platform
+if platform.system() == 'Windows':
+    proc_shell = True
+elif platform.system() == 'Linux':
+    proc_shell = False
 
 from flask import (
     request, session, g,
@@ -23,7 +28,7 @@ from db.database import db_session
 def index():
     proc = subprocess.Popen(['git', 'status'],
         stdout=subprocess.PIPE,
-        shell=True,
+        shell=proc_shell,
     )
     (results, errors) = proc.communicate()
     return render_template(
@@ -39,7 +44,7 @@ def git_status():
         if key.has_key('gitStatus'):
             proc1 = subprocess.Popen(['git', 'status'],
                 stdout=subprocess.PIPE,
-                shell=True,
+                shell=proc_shell,
             )
             (results1, errors1) = proc1.communicate()
         elif key.has_key('gitConfirm') and key.has_key('gitComment'):
@@ -54,19 +59,19 @@ def git_status():
             #~ os.system("git push origin dev")
             proc0 = subprocess.Popen(['git', 'add', '.'],
                 stdout=subprocess.PIPE,
-                shell=True,
+                shell=proc_shell,
             )
             proc1 = subprocess.Popen(['git', 'add', '-A'],
                 stdout=subprocess.PIPE,
-                shell=True,
+                shell=proc_shell,
             )
             proc2 = subprocess.Popen(['git', 'commit', '-m', comments],
                 stdout=subprocess.PIPE,
-                shell=True,
+                shell=proc_shell,
             )
             proc3 = subprocess.Popen(['git', 'push'],
                 stdout=subprocess.PIPE,
-                shell=True,
+                shell=proc_shell,
             )
             (results0, errors0) = proc0.communicate()
             (results1, errors1) = proc1.communicate()

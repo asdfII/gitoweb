@@ -118,9 +118,9 @@
                   <option value="{{ sub_repo_name }}">{{ sub_repo_name }}</option>
                 {% endfor %}
                 </select>&nbsp;&nbsp;
-<!--                 <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromSubRepoId-{{ select_subrepo }}"
+                <div style="color:#FF3333;" class="glyphicon glyphicon-minus" id="removeFromSubRepoId-{{ select_subrepo }}"
                 onclick="javascript:this.parentNode.action='{{ url_for('sub_repo_remove') }}';this.parentNode.submit()">
-                </div> -->
+                </div>
               </form>
             </div>
           </th>
@@ -199,7 +199,10 @@
     <table class="table table-condensed">
       <thead>
         <tr>
-          <th>For Sub Repo, maybe you'll like <font color="red">parent_dir</font>/<font color="green">child_dir</font></th>
+          <th>
+            For Sub Repo, maybe you'll like <font color="red">parent_dir</font>/<font color="green">child_dir</font><br>
+            Or type the group name directly like <font color="green">@project_repo</font>, <font color="green">@bigdata_repo</font>, and so on.
+          </th>
         </tr>
       </thead>
       <tbody>
